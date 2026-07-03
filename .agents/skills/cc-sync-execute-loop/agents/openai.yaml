@@ -1,0 +1,4 @@
+interface:
+  display_name: "CC Sync Execute Loop"
+  short_description: "Runs approved CC sync work in a guarded 10-minute loop."
+  default_prompt: "Use $cc-sync-execute-loop to continue the approved CC_SYNC_PLAN.md loop until blocked."

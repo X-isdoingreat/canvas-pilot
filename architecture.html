@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canvas Skill 架构图</title>
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --ink: #1f2937;
+    --muted: #6b7280;
+    --line: #9ca3af;
+
+    --root-bg: #1f2937;
+    --root-fg: #ffffff;
+
+    --course-bg: #fef3c7;
+    --course-bd: #d97706;
+
+    --type-bg: #dbeafe;
+    --type-bd: #1d4ed8;
+
+    --skill-bg: #dcfce7;
+    --skill-bd: #15803d;
+
+    --agent-bg: #f3e8ff;
+    --agent-bd: #7e22ce;
+
+    --manual-bg: #ffedd5;
+    --manual-bd: #c2410c;
+
+    --hook-bg: #fee2e2;
+    --hook-bd: #dc2626;
+
+    --hook-adv-bg: #fff7ed;
+    --hook-adv-bd: #c2410c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 56px 40px 80px;
+  }
+  h1 {
+    margin: 0 0 10px;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    text-align: center;
+  }
+  .meta {
+    color: var(--muted);
+    font-size: 16px;
+    margin: 0 auto 44px;
+    max-width: 1100px;
+    text-align: center;
+    line-height: 1.55;
+  }
+  .meta code {
+    background: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+  }
+
+  .lang-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+  }
+  .lang-toggle span {
+    padding: 6px 16px;
+    border-radius: 999px;
+    color: var(--muted);
+    transition: background 0.15s;
+  }
+  .lang-toggle span.active {
+    background: var(--ink);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .entry-chain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 0 auto 44px;
+    background: #fff;
+    padding: 24px 28px;
+    border-radius: 14px;
+    border: 2px dashed var(--line);
+    max-width: 1400px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 18px;
+    border: 2px solid transparent;
+    white-space: nowrap;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  }
+  .pill small { display: block; font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 400; }
+  .pill.you   { background: var(--root-bg); color: var(--root-fg); font-weight: 700; }
+  .pill.you small { color: #cbd5e1; }
+  .pill.scan  { background: var(--type-bg); border-color: var(--type-bd); font-weight: 600; }
+  .pill.appr  { background: var(--course-bg); border-color: var(--course-bd); font-weight: 600; }
+  .pill.exec  { background: var(--skill-bg); border-color: var(--skill-bd); font-weight: 600; }
+  .pill.out   { background: var(--manual-bg); border-color: var(--manual-bd); font-weight: 600; }
+  .arrow { color: var(--muted); font-size: 32px; font-weight: 700; }
+
+  .root-row { display: flex; justify-content: center; }
+  .root-box {
+    background: var(--root-bg);
+    color: var(--root-fg);
+    padding: 22px 56px;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.3px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .vline { width: 4px; height: 36px; background: var(--line); margin: 0 auto; border-radius: 2px; }
+  .vline.short { height: 20px; }
+  .vline.long  { height: 56px; }
+
+  .bus {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    position: relative;
+    padding-top: 22px;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+  .bus::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 4px;
+    background: var(--line);
+    border-radius: 2px;
+  }
+
+  .course-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 280px;
+    padding: 0 12px;
+  }
+
+  .box {
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 17px;
+    line-height: 1.4;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 2px solid;
+    min-width: 240px;
+    max-width: 320px;
+    font-weight: 600;
+  }
+  .box small { display: block; font-size: 13.5px; color: var(--muted); margin-top: 5px; font-weight: 400; }
+  .box.course  { background: var(--course-bg); border-color: var(--course-bd); font-weight: 700; font-size: 19px; }
+  .box.type    { background: var(--type-bg); border-color: var(--type-bd); font-size: 17px; }
+  .box.skill   { background: var(--skill-bg); border-color: var(--skill-bd); font-size: 16px; }
+  .box.skill.head { font-family: "JetBrains Mono", Consolas, monospace; font-weight: 700; font-size: 17px; }
+  .box.agent   { background: var(--agent-bg); border-color: var(--agent-bd); font-size: 16px; }
+  .box.manual  { background: var(--manual-bg); border-color: var(--manual-bd); font-size: 15.5px; }
+
+  .types-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .type-col { display: flex; flex-direction: column; align-items: center; }
+  .skills-stack { display: flex; flex-direction: column; align-items: stretch; gap: 0; min-width: 270px; }
+
+  .hooks {
+    margin: 56px auto 0;
+    max-width: 1500px;
+    background: #fff;
+    border: 2px solid var(--hook-bd);
+    border-left: 8px solid var(--hook-bd);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+  .hooks h3 { margin: 0 0 16px; font-size: 22px; color: var(--hook-bd); font-weight: 800; }
+  .hook-section-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 8px 0 12px;
+    color: var(--ink);
+  }
+  .hook-section-title.adv { color: var(--hook-adv-bd); margin-top: 22px; }
+  .hooks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    font-size: 14.5px;
+  }
+  .hook-card {
+    background: var(--hook-bg);
+    border: 2px solid var(--hook-bd);
+    border-radius: 8px;
+    padding: 13px 16px;
+    line-height: 1.5;
+  }
+  .hook-card b { color: var(--hook-bd); font-size: 15px; }
+  .hook-card small { font-size: 13px; color: var(--ink); display: block; margin-top: 4px; }
+  .hook-card.adv {
+    background: var(--hook-adv-bg);
+    border-color: var(--hook-adv-bd);
+    border-style: dashed;
+  }
+  .hook-card.adv b { color: var(--hook-adv-bd); }
+
+  .legend {
+    margin: 36px auto 0;
+    max-width: 1500px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    font-size: 15px;
+    color: var(--muted);
+    justify-content: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-chip { width: 28px; height: 18px; border-radius: 4px; border: 2px solid; }
+
+  .footnote {
+    margin: 40px auto 0;
+    max-width: 1100px;
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.75;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    padding: 24px 32px;
+  }
+  .footnote b { font-size: 17px; }
+  .footnote ul { margin: 10px 0 0 22px; padding: 0; }
+  .footnote li { margin-bottom: 8px; }
+  .footnote code {
+    background: var(--bg);
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid #e5e7eb;
+    font-size: 14.5px;
+  }
+
+  @media (max-width: 1200px) {
+    .bus { flex-direction: column; align-items: center; gap: 36px; }
+    .bus::before { display: none; }
+    .course-col { min-width: 320px; }
+    .hooks-grid { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 32px; }
+    .root-box { font-size: 22px; padding: 16px 36px; }
+    .pill { font-size: 16px; padding: 11px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" id="langToggle">
+  <span data-lang="zh" class="active">中</span>
+  <span data-lang="en">EN</span>
+</div>
+
+<h1 data-i18n="title"></h1>
+<div class="meta" data-i18n="meta"></div>
+
+<!-- Entry chain -->
+<div class="entry-chain">
+  <div class="pill you"  data-i18n="entry_you"></div>
+  <span class="arrow">→</span>
+  <div class="pill scan" data-i18n="entry_scan"></div>
+  <span class="arrow">→</span>
+  <div class="pill appr" data-i18n="entry_appr"></div>
+  <span class="arrow">→</span>
+  <div class="pill exec" data-i18n="entry_exec"></div>
+  <span class="arrow">→</span>
+  <div class="pill out"  data-i18n="entry_out"></div>
+</div>
+
+<!-- L1 root -->
+<div class="root-row">
+  <div class="root-box" data-i18n="root"></div>
+</div>
+<div class="vline long"></div>
+
+<!-- L2 bus -->
+<div class="bus">
+
+  <!-- Quiz course archetype -->
+  <div class="course-col">
+    <div class="box course" data-i18n="course_quiz"></div>
+    <div class="vline"></div>
+    <div class="types-row">
+      <div class="type-col">
+        <div class="box type" data-i18n="quiz_type"></div>
+        <div class="vline"></div>
+        <div class="skills-stack">
+          <div class="box skill head" data-i18n="quiz_skill_head"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="quiz_s1"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="quiz_s2"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="quiz_s3"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="quiz_s4"></div>
+          <div class="vline short"></div>
+          <div class="box agent" data-i18n="quiz_s5"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="quiz_s6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Code course archetype -->
+  <div class="course-col">
+    <div class="box course" data-i18n="course_code"></div>
+    <div class="vline"></div>
+    <div class="types-row">
+      <div class="type-col">
+        <div class="box type" data-i18n="code_type"></div>
+        <div class="vline"></div>
+        <div class="skills-stack">
+          <div class="box skill head" data-i18n="code_skill_head"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="code_s1"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="code_s2"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="code_s3"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="code_s4"></div>
+          <div class="vline short"></div>
+          <div class="box agent" data-i18n="code_s5"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="code_s6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reading course archetype -->
+  <div class="course-col">
+    <div class="box course" data-i18n="course_read"></div>
+    <div class="vline"></div>
+    <div class="types-row">
+      <div class="type-col">
+        <div class="box type" data-i18n="read_type"></div>
+        <div class="vline"></div>
+        <div class="skills-stack">
+          <div class="box skill head" data-i18n="read_skill_head"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="read_s1"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="read_s2"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="read_s3"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="read_s4"></div>
+          <div class="vline short"></div>
+          <div class="box manual" data-i18n="read_s5"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unsupported / skip lane -->
+  <div class="course-col">
+    <div class="box course" data-i18n="course_skip"></div>
+    <div class="vline"></div>
+    <div class="types-row">
+      <div class="type-col">
+        <div class="box type" data-i18n="skip_type"></div>
+        <div class="vline"></div>
+        <div class="skills-stack">
+          <div class="box skill head" data-i18n="skip_skill_head"></div>
+          <div class="vline short"></div>
+          <div class="box skill" data-i18n="skip_s1"></div>
+          <div class="vline short"></div>
+          <div class="box manual" data-i18n="skip_s2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Hooks -->
+<div class="hooks">
+  <h3 data-i18n="hooks_title"></h3>
+
+  <div class="hook-section-title" data-i18n="hooks_core_h"></div>
+  <div class="hooks-grid">
+    <div class="hook-card" data-i18n="hook_inject"></div>
+    <div class="hook-card" data-i18n="hook_schema"></div>
+    <div class="hook-card" data-i18n="hook_router"></div>
+    <div class="hook-card" style="background:#fff;border-style:dashed;" data-i18n="hook_lib"></div>
+  </div>
+
+  <div class="hook-section-title adv" data-i18n="hooks_adv_h"></div>
+  <div class="hooks-grid">
+    <div class="hook-card adv" data-i18n="hook_audit"></div>
+    <div class="hook-card adv" data-i18n="hook_spec"></div>
+    <div class="hook-card adv" data-i18n="hook_ident"></div>
+    <div class="hook-card adv" data-i18n="hook_bash"></div>
+    <div class="hook-card adv" data-i18n="hook_leak"></div>
+  </div>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item"><span class="legend-chip" style="background:var(--root-bg);border-color:var(--root-bg);"></span><span data-i18n="leg_root"></span></div>
+  <div class="legend-item"><span class="legend-chip" style="background:var(--course-bg);border-color:var(--course-bd);"></span><span data-i18n="leg_course"></span></div>
+  <div class="legend-item"><span class="legend-chip" style="background:var(--type-bg);border-color:var(--type-bd);"></span><span data-i18n="leg_type"></span></div>
+  <div class="legend-item"><span class="legend-chip" style="background:var(--skill-bg);border-color:var(--skill-bd);"></span><span data-i18n="leg_skill"></span></div>
+  <div class="legend-item"><span class="legend-chip" style="background:var(--agent-bg);border-color:var(--agent-bd);"></span><span data-i18n="leg_agent"></span></div>
+  <div class="legend-item"><span class="legend-chip" style="background:var(--manual-bg);border-color:var(--manual-bd);"></span><span data-i18n="leg_manual"></span></div>
+  <div class="legend-item"><span class="legend-chip" style="background:var(--hook-bg);border-color:var(--hook-bd);"></span><span data-i18n="leg_hook"></span></div>
+  <div class="legend-item"><span class="legend-chip" style="background:var(--hook-adv-bg);border-color:var(--hook-adv-bd);border-style:dashed;"></span><span data-i18n="leg_hook_adv"></span></div>
+</div>
+
+<div class="footnote" data-i18n="footnote"></div>
+
+<script>
+const T = {
+  zh: {
+    title: "Canvas Skill 架构图",
+    meta: '一句话让 Claude Code 帮你打草稿——这是它的运行逻辑。下面是 4 种典型课程类型的流水线（你 fork 之后照着写自己的）。&nbsp;·&nbsp; 配置: <code>courses.yaml</code> + <code>.claude/skills/</code>',
+
+    /* Entry chain */
+    entry_you:  '你',
+    entry_scan: '说"扫一下 canvas"<small>触发 canvas-scan</small>',
+    entry_appr: '看 plan 后回"做 N"<small>批准你要做的几项</small>',
+    entry_exec: 'canvas-execute<small>对每项找对应 skill</small>',
+    entry_out:  '看 REPORT.md / final_drafts/<small>你审，你交</small>',
+
+    root: "你学校的 Canvas API",
+
+    /* Course archetypes */
+    course_quiz: '在线 Quiz 课<br><small>每周 quiz 类型</small>',
+    course_code: '代码课<br><small>Python project 类型</small>',
+    course_read: '文档/阅读课<br><small>每周读 PDF 写批注</small>',
+    course_skip: '没写 skill 的课<br><small>fallback lane</small>',
+
+    /* Type boxes */
+    quiz_type: 'Online Quiz<br><small>(20 题 / 30 min)</small>',
+    code_type: 'Project / 习题集<br><small>(代码 + 测试)</small>',
+    read_type: 'HW Annotation<br><small>(每周读 + 批注)</small>',
+    skip_type: '任何类型<br><small>(没匹配的都到这)</small>',
+
+    /* Quiz pipeline */
+    quiz_skill_head: 'canvas-myquiz<br><small>(你写的 SKILL.md)</small>',
+    quiz_s1: '①  找到 quiz<br><small>从 URL 拿 quiz_id</small>',
+    quiz_s2: '②  读 module reading<br>做 study notes',
+    quiz_s3: '③  逐题答<br><small>每题独立思考</small>',
+    quiz_s4: '④  闸门检查<br><small>授权 / 限流 / 时段</small>',
+    quiz_s5: '⑤  多 agent 仲裁<br><small>(可选 sub-agent)</small>',
+    quiz_s6: '⑥  自动提交<br><small>(若已授权)</small>',
+
+    /* Code pipeline */
+    code_skill_head: 'canvas-mycode<br><small>(你写的 SKILL.md)</small>',
+    code_s1: '①  拉真规格<br><small>外部 instructor 站</small>',
+    code_s2: '②  写代码 + 单元测试<br><small>100% coverage</small>',
+    code_s3: '③  仿造 git 提交历史<br><small>backdate commits</small>',
+    code_s4: '④  数值约束量一遍<br><small>"≤3 句""恰好 N 函数"</small>',
+    code_s5: '⑤  pre-submit reviewer<br><small>(独立 agent 二审)</small>',
+    code_s6: '⑥  上传 bundle<br><small>(若已授权)</small>',
+
+    /* Reading pipeline */
+    read_skill_head: 'canvas-myread<br><small>(你写的 SKILL.md)</small>',
+    read_s1: '①  找本周 HW page<br><small>module 里那一页</small>',
+    read_s2: '②  拉 reading PDF<br><small>从 Files 文件夹</small>',
+    read_s3: '③  在 PDF 上批注<br><small>PyMuPDF 写边注</small>',
+    read_s4: '④  写学生 voice 摘要<br><small>不像 AI 写的</small>',
+    read_s5: '⑤  你手动上传<br><small>(框架不替你交)</small>',
+
+    /* Skip pipeline */
+    skip_skill_head: 'canvas-skip<br><small>(框架自带)</small>',
+    skip_s1: '①  写到 todo.md',
+    skip_s2: '②  你手动做',
+
+    /* Hooks */
+    hooks_title: 'Hook 系统（横切所有上面的流水线）',
+    hooks_core_h: '✅  框架自带（fork 之后就有）',
+    hooks_adv_h:  '🔶  进阶模式（原作者私有，照着写自己的）',
+
+    hook_inject: '<b>① SessionStart</b><br>inject-context<br><small>开 session 时给 Claude 看今天 pending</small>',
+    hook_schema: '<b>② PostToolUse(Write)</b><br>check-result-schema<br><small>每份 result.json 格式被验</small>',
+    hook_router: '<b>③ Stop</b><br>check-router-complete<br><small>每件作业有交代才放过 session</small>',
+    hook_lib:    '<b>共享 lib</b><br>_lib.py<br><small>@safe_main 防 hook 自身 runaway</small>',
+
+    hook_audit:  '<b>★ PreToolUse(Bash)</b><br>presubmit-audit<br><small>提交前查 verification.log 全 PASS</small>',
+    hook_spec:   '<b>★ PostToolUse(Write)</b><br>spec-grounding<br><small>外部引用 → references/ 必须非空</small>',
+    hook_ident:  '<b>★ PostToolUse(Write)</b><br>identifier-grounding<br><small>代码标识符必须 traceable，禁止凭空</small>',
+    hook_bash:   '<b>★ PostToolUse(Bash)</b><br>bash-output<br><small>pytest/coverage 输出真伪验</small>',
+    hook_leak:   '<b>★ PreToolUse(Bash)</b><br>public-leak<br><small>双 repo 时拦私容泄漏到 public</small>',
+
+    /* Legend */
+    leg_root:     '入口 / 根',
+    leg_course:   '课程类型 (L2)',
+    leg_type:     '作业 type (L3)',
+    leg_skill:    'Skill / 流水线步 (L4)',
+    leg_agent:    '子 agent（独立 context 二审）',
+    leg_manual:   '你手动做的步',
+    leg_hook:     'Hook（公开框架自带）',
+    leg_hook_adv: 'Hook（进阶模式，自实现）',
+
+    /* Footnote */
+    footnote: `<b>怎么读这张图</b>：
+      <ul>
+        <li>从上往下：<b>你说"扫一下"→ canvas-scan 列出 plan → 你点头 → canvas-execute 把每项分给对应 skill → 你审 / 你交</b>。</li>
+        <li>每一列是<b>一种课程类型</b>的完整流水线。L2 = 课程类型；L3 = 该类型下的作业种类；L4 = 真正跑的步骤链（绿色 = 你写的 SKILL.md 里的步；紫色 = 调一个独立 agent；橙色 = 你手动做）。</li>
+        <li>箭头方向 = 时间顺序。每一步对前一步的产物负责。</li>
+        <li>底部红/橙 hook 横切所有列：绿框 = 框架默认带；橙虚框 = 原作者用的更严格闸门，模式公开但代码私有，你照着实现自己的。</li>
+        <li>fork 之后默认只有 <code>canvas-scan</code> / <code>canvas-execute</code> / <code>canvas-skip</code>。每一种课程类型的 skill 都要你自己写——上面的步骤是参考形状。</li>
+        <li>没有为某门课写 skill 时，它走最右边那条 fallback：<code>canvas-skip</code> 把作业写到 todo.md，让你手动做。</li>
+      </ul>`
+  },
+
+  en: {
+    title: "Canvas Skill Architecture",
+    meta: 'One sentence in Claude Code, drafts come back. This diagram is the runtime logic. Below are 4 typical course archetypes — fork the repo and write your own following these shapes. &nbsp;·&nbsp; Config: <code>courses.yaml</code> + <code>.claude/skills/</code>',
+
+    entry_you:  'You',
+    entry_scan: 'say "scan canvas"<small>triggers canvas-scan</small>',
+    entry_appr: 'review plan, reply "do N"<small>approve which items to run</small>',
+    entry_exec: 'canvas-execute<small>routes each item to its skill</small>',
+    entry_out:  'review REPORT.md / final_drafts/<small>you review, you submit</small>',
+
+    root: "Your school's Canvas API",
+
+    course_quiz: 'Quiz course<br><small>(weekly online quizzes)</small>',
+    course_code: 'Code course<br><small>(Python project / problem sets)</small>',
+    course_read: 'Reading course<br><small>(weekly PDF + annotation)</small>',
+    course_skip: 'Course w/o a skill<br><small>(fallback lane)</small>',
+
+    quiz_type: 'Online Quiz<br><small>(20 Qs / 30 min)</small>',
+    code_type: 'Project / Problem Set<br><small>(code + tests)</small>',
+    read_type: 'HW Annotation<br><small>(weekly read + write)</small>',
+    skip_type: 'any kind<br><small>(unrouted items land here)</small>',
+
+    quiz_skill_head: 'canvas-myquiz<br><small>(your SKILL.md)</small>',
+    quiz_s1: '①  find the quiz<br><small>resolve quiz_id from URL</small>',
+    quiz_s2: '②  read module reading<br>build study notes',
+    quiz_s3: '③  answer one by one<br><small>think each through</small>',
+    quiz_s4: '④  pre-flight gate<br><small>auth / rate / time window</small>',
+    quiz_s5: '⑤  multi-agent arbitrate<br><small>(optional sub-agent)</small>',
+    quiz_s6: '⑥  auto-submit<br><small>(if pre-authorized)</small>',
+
+    code_skill_head: 'canvas-mycode<br><small>(your SKILL.md)</small>',
+    code_s1: '①  fetch real spec<br><small>external instructor site</small>',
+    code_s2: '②  write code + unit tests<br><small>100% coverage</small>',
+    code_s3: '③  backdate git history<br><small>(commits over hours)</small>',
+    code_s4: '④  measure numeric specs<br><small>"≤3 sentences", "exactly N fns"</small>',
+    code_s5: '⑤  pre-submit reviewer<br><small>(independent sub-agent)</small>',
+    code_s6: '⑥  upload bundle<br><small>(if pre-authorized)</small>',
+
+    read_skill_head: 'canvas-myread<br><small>(your SKILL.md)</small>',
+    read_s1: '①  find this week\'s HW page<br><small>in modules</small>',
+    read_s2: '②  fetch the reading PDF<br><small>from Files folder</small>',
+    read_s3: '③  annotate the PDF<br><small>via PyMuPDF margin notes</small>',
+    read_s4: '④  write a student-voice summary<br><small>not AI-sounding</small>',
+    read_s5: '⑤  you upload manually<br><small>(framework won\'t submit)</small>',
+
+    skip_skill_head: 'canvas-skip<br><small>(ships with framework)</small>',
+    skip_s1: '①  log to todo.md',
+    skip_s2: '②  you handle manually',
+
+    hooks_title: 'Hook system (cross-cuts all pipelines above)',
+    hooks_core_h: '✅  Framework-shipped (you get these on fork)',
+    hooks_adv_h:  '🔶  Advanced patterns (original author\'s private — re-implement your own)',
+
+    hook_inject: '<b>① SessionStart</b><br>inject-context<br><small>shows Claude today\'s pending list at session start</small>',
+    hook_schema: '<b>② PostToolUse(Write)</b><br>check-result-schema<br><small>every result.json shape-checked</small>',
+    hook_router: '<b>③ Stop</b><br>check-router-complete<br><small>session can\'t end until every item resolved</small>',
+    hook_lib:    '<b>shared lib</b><br>_lib.py<br><small>@safe_main keeps a buggy hook from blocking Claude</small>',
+
+    hook_audit:  '<b>★ PreToolUse(Bash)</b><br>presubmit-audit<br><small>verification.log all PASS before any submit</small>',
+    hook_spec:   '<b>★ PostToolUse(Write)</b><br>spec-grounding<br><small>external refs → references/ must be non-empty</small>',
+    hook_ident:  '<b>★ PostToolUse(Write)</b><br>identifier-grounding<br><small>code identifiers must be traceable, no inventions</small>',
+    hook_bash:   '<b>★ PostToolUse(Bash)</b><br>bash-output<br><small>pytest/coverage stdout actually parsed for truth</small>',
+    hook_leak:   '<b>★ PreToolUse(Bash)</b><br>public-leak<br><small>dual-repo: blocks private content from leaking public</small>',
+
+    leg_root:     'Entry / Root',
+    leg_course:   'Course archetype (L2)',
+    leg_type:     'Assignment type (L3)',
+    leg_skill:    'Skill / pipeline step (L4)',
+    leg_agent:    'Sub-agent (independent-context review)',
+    leg_manual:   'Manual step (you do it)',
+    leg_hook:     'Hook (framework-shipped)',
+    leg_hook_adv: 'Hook (advanced — DIY)',
+
+    footnote: `<b>How to read this</b>:
+      <ul>
+        <li>Top to bottom: <b>You say "scan" → canvas-scan lists a plan → you nod → canvas-execute hands each item to its skill → you review / submit</b>.</li>
+        <li>Each column is one <b>course archetype</b>'s full pipeline. L2 = archetype; L3 = assignment type within it; L4 = the actual step chain (green = steps you wrote in SKILL.md; purple = a sub-agent call; orange = a step you do by hand).</li>
+        <li>Arrow direction = time order. Each step is responsible for the artifact the previous one produced.</li>
+        <li>The red/orange hook strip cross-cuts all columns: solid red = ships with the framework; dashed orange = stricter gates the original author runs in private. The patterns are public, the code isn't — re-implement your own version if useful.</li>
+        <li>After fork, you only get <code>canvas-scan</code> / <code>canvas-execute</code> / <code>canvas-skip</code>. Each archetype's skill is something you write — the steps above are a reference shape.</li>
+        <li>Any course you haven't written a skill for falls into the rightmost lane: <code>canvas-skip</code> logs the item to todo.md and lets you handle it manually.</li>
+      </ul>`
+  }
+};
+
+function render(lang) {
+  document.documentElement.lang = (lang === 'zh') ? 'zh-CN' : 'en';
+  document.title = T[lang].title;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+  });
+  document.querySelectorAll('#langToggle span').forEach(s => {
+    s.classList.toggle('active', s.dataset.lang === lang);
+  });
+  localStorage.setItem('canvas-arch-lang', lang);
+}
+
+document.getElementById('langToggle').addEventListener('click', e => {
+  const target = e.target.closest('span[data-lang]');
+  if (!target) return;
+  render(target.dataset.lang);
+});
+
+render(localStorage.getItem('canvas-arch-lang') || 'zh');
+</script>
+
+</body>
+</html>

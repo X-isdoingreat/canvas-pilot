@@ -1,0 +1,27 @@
+# Canvas Pilot — Python runtime dependencies.
+#
+# Install:   pip install -r requirements.txt
+# Then let canvas-setup fetch the browser binary, or run it yourself:
+#            python -m playwright install chromium
+#
+# Everything else the framework uses is in the standard library (json, re,
+# pathlib, subprocess, datetime, zoneinfo, html, urllib, ast, ...). There is no
+# Anthropic SDK dependency — model calls go through Claude Code's tooling, not a
+# Python client.
+
+requests>=2.31           # Canvas / zyBook / YuJa HTTP
+PyYAML>=6.0              # courses.yaml parsing (imported as `yaml`)
+PyMuPDF>=1.23            # PDF read + annotate (imported as `fitz`)
+python-docx>=1.1         # .docx generation (imported as `docx`)
+tzdata>=2024.1           # Windows: zoneinfo ships no IANA tz data; ZoneInfo needs this
+
+# Browser automation for Canvas login + cookie capture.
+# PINNED ON PURPOSE: the playwright wrapper version is tied to a specific
+# Chromium build — 1.58.0 pairs with the chromium-1208 binary. Bumping the
+# wrapper forces a fresh ~150 MB Chromium download. Keep this pin unless you
+# intend to re-download.
+playwright==1.58.0
+
+# Optional — .docx -> .pdf conversion for essay output. Needs MS Word (Windows)
+# or LibreOffice installed at runtime. Safe to omit if you only need .docx.
+docx2pdf>=0.1.8

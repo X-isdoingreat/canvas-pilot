@@ -1,0 +1,80 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \".claude/hooks/check-setup-done.py\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/inject-context.py\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-public-leak.py\"",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-presubmit-audit.py\"",
+            "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-no-runner-script.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-result-schema.py\"",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-spec-grounding.py\"",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-identifier-grounding.py\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-router-complete.py\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

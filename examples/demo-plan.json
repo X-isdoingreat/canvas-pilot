@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-09-17T09:00:00-07:00",
+  "expires_at": "2026-09-18T09:00:00-07:00",
+  "items": [
+    {
+      "index": 1,
+      "bucket": "urgent",
+      "course_id": 100001,
+      "course_name": "Code Course A",
+      "assignment_id": 200001,
+      "assignment_name": "Set 3 Problem 1",
+      "due_at": "2026-09-19T06:59:00Z",
+      "hours_left": 38.98,
+      "live_state": "unsubmitted",
+      "proposed_skill": "canvas-code-course",
+      "user_decision": null
+    },
+    {
+      "index": 2,
+      "bucket": "urgent",
+      "course_id": 100002,
+      "course_name": "Writing Course B",
+      "assignment_id": 200002,
+      "assignment_name": "Week 5 Reading Notes",
+      "due_at": "2026-09-19T19:30:00Z",
+      "hours_left": 51.5,
+      "live_state": "unsubmitted",
+      "proposed_skill": "canvas-reading-annotation",
+      "user_decision": null
+    },
+    {
+      "index": 3,
+      "bucket": "soon",
+      "course_id": 100003,
+      "course_name": "Math Course C",
+      "assignment_id": 200003,
+      "assignment_name": "Problem Set 4",
+      "due_at": "2026-09-21T06:59:00Z",
+      "hours_left": 86.98,
+      "live_state": "unsubmitted",
+      "proposed_skill": "canvas-zybooks",
+      "user_decision": null
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 Security or accidental data leak
+    url: https://github.com/X-isdoingreat/Canvas_pilot_public/blob/main/SECURITY.md
+    about: Report leaked private data or a vulnerability PRIVATELY. Do not open a public issue.
+  - name: 💬 General question
+    url: https://x.com/X_isdoingreat
+    about: Ask the maintainer on X.

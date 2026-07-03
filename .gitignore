@@ -1,0 +1,108 @@
+.env
+runs/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# claudeclaw daemon settings contains live bot tokens — keep local only
+.claude/claudeclaw/settings.json
+.claude/claudeclaw/logs/
+.claude/claudeclaw/session.json
+.claude/claudeclaw/state.json
+.claude/claudeclaw/daemon.pid
+.claude/claudeclaw/whisper/
+
+# Hook error log (debug only)
+.claude/hooks/hook-errors.log
+
+# Bash-output hook — origin-only (catches command-line school-identity-leak
+# / noisy stdout patterns that aren't useful for fork users). Other audit hooks
+# (check-presubmit-audit, check-spec-grounding, check-identifier-grounding)
+# are now tracked — see Phase 3 of the v0.1 ship plan.
+.claude/hooks/check-bash-output.py
+
+# zyBooks auth + browser state — contain JWTs and session data, NEVER commit
+.zybooks_cookies.json
+.zybooks_localstorage.json
+.zybooks_sessionstorage.json
+
+# Single source of private overlay — school-specific app overrides for per-course
+# skills, decision records, product strategy, origin-only Python/scripts/hooks.
+# Each tracked SKILL.md looks for a sibling _private/canvas-<name>-app.md.
+_private/
+
+# Canvas due-alert watchdog — lives in scripts/ (not _private/) so the script's
+# `Path(__file__).parent.parent` resolves to project root, but the file itself
+# is origin-only (contains personal RECIPIENT email + school-specific workflow).
+scripts/canvas_due_alert.py
+scripts/canvas_due_alert.bat
+
+# canvas-cron framework: all of scripts/canvas_cron.py / cron_base.py /
+# cron_registry.py / cron_template_*.py / cron_templates/task.xml.template
+# are GENERIC (zero school-specific data) and tracked. User-created cron
+# instances (course_id + recipient + schedule + params) live in
+# _private/cron_instances.yaml (already covered by `_private/` rule above).
+# Generated task XML contains machine-specific {{USER_SID}} + absolute paths.
+scripts/cron_templates/_generated/
+
+# SECRETS.md — all per-user/per-quarter identifiers (course IDs, file IDs,
+# email, instructor names, etc.) Skills reference this file but the file
+# itself is local-only. Recreate from SECRETS.example.md when bootstrapping.
+SECRETS.md
+
+# courses.yaml — real course IDs per student/quarter; copy from courses.yaml.example
+courses.yaml
+
+# Delivery folder — final assignment files for user to upload manually
+final_drafts/
+# legacy name (folder renamed 2026-05-23); old 交付/ may still hold past drafts locally
+交付/
+.yuja_cookies.json
+yuja_transcripts/
+
+# Canvas cookie auth (CANVAS_AUTH=cookie) — live session cookies, NEVER commit
+.cookies/
+
+# Student-supplied assignment inputs (readings, drafts, render scripts) — local-only.
+# Directory exists in repo via sources/README.md; everything else inside it is private.
+sources/*
+!sources/README.md
+
+# Scheduler runtime lock files
+.claude/scheduled_tasks.lock
+
+# Private dev notes — local-only, never to public mirror
+CLAUDE.local.md
+*.local.md
+
+# Daily / 测试 doc — 跟随日期命名,不进 git
+5.23.md
+
+# iClicker auto-sign-in 副产品 — 整个 .iclicker/ untracked from git 2026-05-24
+# (kept on disk; 3 sign-in crons run from it). The old "track in origin + block
+# upstream via check-public-leak PRIVATE_ONLY_PATHS" scheme is dead
+# (PRIVATE_ONLY_PATHS removed 2026-05-14), so the dir is now fully gitignored.
+# Specific secret-file entries below are subsumed by the blanket but kept for doc.
+.iclicker/
+.iclicker/secrets.env
+.iclicker/.cookies/
+.iclicker/.venv/
+.iclicker/*.token
+.iclicker/*.jwt
+.iclicker/logs/
+.iclicker/*.har
+.iclicker/*.local.json
+.iclicker/last_run.json
+.iclicker/last_run.*.json
+.iclicker/history.md
+.iclicker/history.md.lock
+.iclicker/history.md.tmp
+.iclicker/.poll.lock
+.iclicker/.poll.*.lock
+# 多用户扩展：users/ 装 per-user JWT，绝对不进 git
+.iclicker/users/
+# 个人配置 — 公开 fork 时各自从 .example 复制本地填值
+.iclicker/config.json
+.iclicker/scripts/iclicker-task.xml
+.iclicker/scripts/watchdog-backup-task.xml
+.iclicker/scripts/com.iclicker.autosign.plist
