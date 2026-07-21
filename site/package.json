@@ -1,0 +1,16 @@
+{
+  "name": "site",
+  "version": "1.0.0",
+  "description": "Static website for `https://canvas-pilot.likelyou.com`.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "python tests/validate_site.py",
+    "validate": "python tests/validate_site.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

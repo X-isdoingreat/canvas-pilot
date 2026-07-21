@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas LMS Codex Agent Workflow - Canvas Pilot</title>
+    <meta name="description" content="Canvas Pilot is a local-first Canvas LMS workflow layer for Codex users who want recurring assignment patterns to become review-ready workflows.">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/use-cases/canvas-lms-codex-agent">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Canvas LMS Codex Agent Workflow">
+    <meta property="og:description" content="A Codex-oriented Canvas LMS workflow layer for scan, approval, execution, and review.">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/use-cases/canvas-lms-codex-agent">
+    <meta property="og:type" content="article">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/"><span class="brand-mark">CP</span><span>Canvas Pilot</span></a>
+        <div class="nav-links">
+          <a href="/compare/canvas-mcp">Compare</a>
+          <a href="/articles/workflow-layer-above-canvas-mcp">Article</a>
+          <a href="/docs/power-user-guide">Power users</a>
+          <a href="/faq">FAQ</a>
+          <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="article">
+      <article class="article-body">
+        <p class="article-meta">Use case updated July 6, 2026 by X_isdoingreat</p>
+        <h1>Canvas LMS Codex Agent Workflow</h1>
+        <p class="lede">
+          Canvas Pilot is built for Codex users who already understand local
+          agent workflows and want Canvas LMS coursework to become a repeatable
+          scan, approval, execute, and review loop.
+        </p>
+
+        <h2 id="codex-fit">Why Codex is a good fit</h2>
+        <p>
+          Codex can read a local repository, follow project instructions, run
+          tools, inspect files, and produce artifacts. Canvas Pilot turns that
+          capability into a course workflow: the agent scans Canvas, proposes a
+          plan, waits for approval, and dispatches only approved items into
+          course-specific workflows.
+        </p>
+
+        <h2 id="workflow">The Codex-facing workflow</h2>
+        <pre class="code-block">scan canvas -> plan.json -> approval -> canvas-execute -> result.json -> REPORT.md</pre>
+        <p>
+          This boundary matters. The scan step is planning, not execution.
+          Execution starts only after approval. The output is designed to be
+          reviewed by the student before anything is submitted elsewhere.
+        </p>
+
+        <h2 id="course-memory">Course memory instead of repeated prompting</h2>
+        <p>
+          A one-off Codex prompt can help with one assignment. Canvas Pilot is
+          for patterns that return every week. It keeps public-safe workflow
+          skeletons in the repo and private course details in local ignored
+          overlays, so recurring coursework can be handled consistently without
+          putting private identifiers in public code.
+        </p>
+
+        <h2 id="related">Related pages</h2>
+        <p>
+          Read the <a href="/use-cases/canvas-lms-claude-code-agent">Claude Code
+          workflow page</a>, the
+          <a href="/use-cases/canvas-assignment-workflow-automation">assignment
+          workflow automation page</a>, or the
+          <a href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub repo</a>.
+        </p>
+      </article>
+      <aside class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#codex-fit">Codex fit</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#course-memory">Course memory</a>
+        <a href="#related">Related pages</a>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span><a href="/">Home</a> / <a href="/llms.txt">llms.txt</a></span>
+      </div>
+    </footer>
+  </body>
+</html>

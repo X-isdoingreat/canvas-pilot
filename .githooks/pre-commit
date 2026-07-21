@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+python tests/codex_runtime/run_skill_frontmatter_tests.py

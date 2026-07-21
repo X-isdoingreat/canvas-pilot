@@ -1,0 +1,4 @@
+interface:
+  display_name: "Daily Work Tweet"
+  short_description: "Turn whole-machine daily work into bilingual X posts"
+  default_prompt: "Use $daily-work-tweet to scan today's privacy-filtered work across this machine and draft separate copy-ready Chinese and English X posts."

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en" class="landing-document">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Canvas Pilot - Kill repetitive homework</title>
+    <meta name="description" content="Canvas Pilot checks Canvas, finds assignment requirements and course materials, then routes recurring work to the right reusable Skill.">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/install">
+    <link rel="alternate" hreflang="en" href="https://canvas-pilot.likelyou.com/install">
+    <link rel="alternate" hreflang="zh-CN" href="https://canvas-pilot.likelyou.com/zh/install">
+    <link rel="alternate" hreflang="x-default" href="https://canvas-pilot.likelyou.com/install">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Kill repetitive homework">
+    <meta property="og:description" content="Canvas Pilot finds the Canvas requirements and course materials, then gets recurring assignments handled by the right Skill.">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/install">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Canvas Pilot",
+        "description": "Canvas Pilot is a local-first Canvas LMS AI agent that finds assignment requirements and course materials, then routes recurring work to reusable Skills.",
+        "codeRepository": "https://github.com/X-isdoingreat/canvas-pilot",
+        "programmingLanguage": "Python",
+        "license": "https://github.com/X-isdoingreat/canvas-pilot/blob/main/LICENSE",
+        "url": "https://canvas-pilot.likelyou.com/install",
+        "inLanguage": "en",
+        "author": {
+          "@type": "Person",
+          "name": "X_isdoingreat",
+          "url": "https://github.com/X-isdoingreat"
+        }
+      }
+    </script>
+    <script src="/landing.js" defer></script>
+  </head>
+  <body class="landing-page">
+    <div class="landing-fold">
+      <header class="site-header landing-header">
+        <nav class="nav landing-nav" aria-label="Primary">
+          <a class="brand" href="/install">
+            <span class="brand-mark">CP</span>
+            <span>Canvas Pilot</span>
+          </a>
+          <div class="nav-links landing-nav-links">
+            <a href="#how-it-works">How it works</a>
+            <a href="/install">Install</a>
+            <a href="/zh/install" lang="zh-CN" hreflang="zh-CN">中文</a>
+            <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="landing-main">
+        <section class="landing-hero" aria-labelledby="hero-title">
+          <div class="landing-hero-copy">
+            <h1 id="hero-title">Kill repetitive homework.</h1>
+            <p class="landing-lede">Everyone uses AI for homework. Canvas Pilot checks Canvas, finds the requirements and course materials, then handles the assignment.</p>
+            <div class="landing-prompt-card">
+              <div class="landing-prompt-heading">
+                <span>Copy this to your Agent to get started</span>
+                <button
+                  class="landing-prompt-toggle"
+                  id="toggle-agent-prompt"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="home-prompt-preview-text"
+                  data-expand-label="Expand"
+                  data-collapse-label="Collapse"
+                >Expand</button>
+              </div>
+              <pre class="landing-prompt-preview" id="home-prompt-preview-text" tabindex="0">Set up Canvas Pilot locally from:
+
+https://github.com/X-isdoingreat/canvas-pilot.git</pre>
+              <div class="landing-prompt-actions">
+                <button
+                  class="landing-copy-button"
+                  id="copy-agent-prompt"
+                  type="button"
+                  data-copy-label="Copy for your Agent"
+                  data-copied-label="Copied"
+                >Copy for your Agent</button>
+                <p
+                  class="landing-copy-status"
+                  id="home-copy-status"
+                  data-success="Copied. Paste it into your Agent."
+                  data-failure="Copy failed. Open the install page to copy it manually."
+                  aria-live="polite"
+                ></p>
+              </div>
+            </div>
+            <textarea id="home-setup-prompt" hidden readonly>Set up Canvas Pilot locally from:
+
+https://github.com/X-isdoingreat/canvas-pilot.git
+
+Clone the repository, or safely update an existing copy without overwriting local configuration or unrelated changes. Read AGENTS.md, .agents/skills/canvas-setup/SKILL.md, and .agents/skills/canvas-skill-opportunity/SKILL.md.
+
+After downloading, ask me exactly: "Which school do you use Canvas through?" Resolve the school's official Canvas login URL. If it is ambiguous, ask me for the URL; never guess. Keep school and course details in gitignored local files.
+
+Set up a repo-local Python environment and required dependencies. Ask before any system-wide change.
+
+Open an interactive browser so I can log in to Canvas. Never ask me to put credentials or 2FA in chat or the terminal. Verify authentication.
+
+Immediately after login, run canvas-skill-opportunity read-only. Inspect recurring work, representative real specs, and Canvas retry/feedback settings. Recommend which candidate should become the first durable skill, then stop and ask me to choose a number.
+
+Until I choose: do not run canvas-bootstrap, create a route or skill, scan pending work, start an attempt, solve or draft work, read raw answers or grades, upload, submit, commit, push, deploy, or modify .claude. Use numbered aliases in chat and keep the full report local.</textarea>
+          </div>
+
+          <div class="landing-loop" aria-label="The weekly homework loop before and after Canvas Pilot">
+            <div class="loop-before">
+              <p class="loop-label loop-manual-title">4 manual steps, every week</p>
+              <ol class="loop-manual-list">
+                <li>Find Canvas files</li>
+                <li>Read requirements</li>
+                <li>Complete the answer</li>
+                <li>Submit to Canvas</li>
+              </ol>
+            </div>
+            <div class="loop-transition" data-automation-transition="4-to-1" aria-hidden="true">
+              <span class="loop-transition-count">4</span>
+              <span class="loop-transition-arrow">↓</span>
+              <span class="loop-transition-count loop-transition-one">1</span>
+            </div>
+            <div class="loop-after">
+              <strong class="loop-automation-title"><span>One Agent Skill</span> runs it all.</strong>
+              <div class="loop-skill-frame" data-agent-skill>
+                <div class="loop-skill-header">
+                  <span class="loop-skill-kind">Reusable Agent Skill</span>
+                  <strong class="loop-skill-name">Canvas Pilot</strong>
+                  <span class="loop-automation-kicker">Automatic</span>
+                </div>
+                <div class="loop-automation-flow">
+                  <span class="loop-automation-rail" aria-hidden="true">
+                    <span class="loop-automation-pulse"></span>
+                  </span>
+                  <ol class="loop-auto-list" data-automation-workflow>
+                    <li data-workflow-step><span class="loop-step-check" aria-hidden="true"></span><span>Reads Canvas files</span></li>
+                    <li data-workflow-step><span class="loop-step-check" aria-hidden="true"></span><span>Reads requirements</span></li>
+                    <li data-workflow-step><span class="loop-step-check" aria-hidden="true"></span><span>Does the work</span></li>
+                    <li data-workflow-step><span class="loop-step-check" aria-hidden="true"></span><span>Ready for Canvas</span></li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <a class="how-it-works-tease" id="how-it-works" href="#video-series">
+        <span>How it works</span>
+      </a>
+    </div>
+
+    <main>
+      <section class="video-series" id="video-series" aria-labelledby="video-series-title">
+        <h2 class="visually-hidden" id="video-series-title">Canvas Pilot walkthrough videos</h2>
+        <div class="video-grid">
+          <article class="video-entry video-entry-quiz">
+            <div class="video-placeholder" data-video-state="empty" role="img" aria-label="Reserved space for the Quiz walkthrough video"></div>
+            <div class="video-caption">
+              <h3>Quiz</h3>
+              <p>First attempt. Canvas feedback. A corrected second attempt.</p>
+            </div>
+          </article>
+
+          <article class="video-entry">
+            <div class="video-placeholder" data-video-state="empty" role="img" aria-label="Reserved space for the coding assignment walkthrough video"></div>
+            <div class="video-caption">
+              <h3>Code assignments</h3>
+              <p>From the real course specification to tested code.</p>
+            </div>
+          </article>
+
+          <article class="video-entry">
+            <div class="video-placeholder" data-video-state="empty" role="img" aria-label="Reserved space for the document assignment walkthrough video"></div>
+            <div class="video-caption">
+              <h3>Documents</h3>
+              <p>Accounting, business, and structured Word work.</p>
+            </div>
+          </article>
+
+          <article class="video-entry video-entry-wide">
+            <div class="video-placeholder" data-video-state="empty" role="img" aria-label="Reserved space for the Canvas assignment walkthrough video"></div>
+            <div class="video-caption">
+              <h3>Inside Canvas</h3>
+              <p>Readings, short annotations, quizzes, and Canvas-native assignments.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="landing-fit" aria-labelledby="fit-title">
+        <div class="landing-fit-heading">
+          <h2 id="fit-title">Built for work AI can finish and check.</h2>
+          <p>Assignment type matters more than length. A long code problem can be a better first Skill than one continuous essay.</p>
+        </div>
+        <div class="landing-fit-columns">
+          <div>
+            <h3>Strong fit</h3>
+            <p>Code, math, statistics, economics, accounting, business documents, Canvas quizzes, readings, and independent short answers.</p>
+          </div>
+          <div>
+            <h3>Needs a hand</h3>
+            <p>Continuous essays over about 200 words, performance work, and third-party sites with separate logins, CAPTCHA, or anti-bot checks.</p>
+            <a href="/setup#assignment-fit">See the assignment fit guide</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer landing-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span>
+          <a href="/install">Install</a> /
+          <a href="/compare/canvas-mcp">Compare</a> /
+          <a href="/faq">FAQ</a> /
+          <a href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

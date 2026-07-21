@@ -1,0 +1,50 @@
+# Canvas Pilot CI — offline test runners only.
+#
+# These runners do string / markdown assertions over tracked files. They never
+# touch Canvas, never need cookies, never read a CANVAS_TOKEN.
+#
+# Auth rule (see docs/CODEX_AUTOMATION.md): CI must not use committed auth.
+# Never commit .env, .cookies/, Canvas cookies, or browser session files.
+# CI runs entirely on tracked, non-secret fixtures.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+# Least privilege: read the repo, comment on PRs, nothing else.
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies (also smoke-tests requirements.txt)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      # No `playwright install chromium` here — the offline runners open no
+      # browser, so the 150 MB download is skipped.
+
+      - name: Run offline test runners
+        run: |
+          python tests/codex_runtime/run_all.py
+          python tests/codex_runtime/run_automation_tests.py
+          python tests/codex_runtime/run_onboarding_tests.py
+          python tests/codex_runtime/run_plugin_tests.py
+          python tests/codex_hooks/run_hook_tests.py
+          python tests/codex_hooks/run_advanced_hook_tests.py
+          python tests/codex_bootstrap/run_bootstrap_tests.py

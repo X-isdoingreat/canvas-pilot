@@ -1,0 +1,56 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .codex/hooks/session_start.py",
+            "timeout": 30,
+            "statusMessage": "Loading canvas-pilot Codex context"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .codex/hooks/pre_tool_guard.py",
+            "timeout": 90,
+            "statusMessage": "Checking Codex Bash command"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|apply_patch|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .codex/hooks/post_tool_guard.py",
+            "timeout": 30,
+            "statusMessage": "Checking Canvas Pilot guardrails"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .codex/hooks/stop_guard.py",
+            "timeout": 30,
+            "statusMessage": "Checking Codex batch completion"
+          }
+        ]
+      }
+    ]
+  }
+}
+

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Open-source Canvas LMS AI Agent - Canvas Pilot</title>
+    <meta name="description" content="Canvas Pilot is an open-source, local-first Canvas LMS AI agent for recurring assignment workflows, Codex, Claude Code, and student review.">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/use-cases/open-source-canvas-lms-ai-agent">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Open-source Canvas LMS AI Agent">
+    <meta property="og:description" content="A local-first Canvas LMS AI agent that turns recurring coursework patterns into scan, approval, and review workflows.">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/use-cases/open-source-canvas-lms-ai-agent">
+    <meta property="og:type" content="article">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/"><span class="brand-mark">CP</span><span>Canvas Pilot</span></a>
+        <div class="nav-links">
+          <a href="/compare/canvas-mcp">Compare</a>
+          <a href="/articles/workflow-layer-above-canvas-mcp">Article</a>
+          <a href="/docs/power-user-guide">Power users</a>
+          <a href="/faq">FAQ</a>
+          <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="article">
+      <article class="article-body">
+        <p class="article-meta">Use case updated July 6, 2026 by X_isdoingreat</p>
+        <h1>Open-source Canvas LMS AI Agent</h1>
+        <p class="lede">
+          Canvas Pilot is an open-source Canvas LMS AI agent for students and
+          AI power users who want recurring Canvas coursework to become a
+          local-first, review-first workflow.
+        </p>
+
+        <h2 id="problem">The problem</h2>
+        <p>
+          Canvas LMS stores assignments, modules, files, pages, and submissions,
+          but many real coursework workflows repeat outside a single Canvas
+          description. A course may always hide the real spec on an external
+          site. Another course may always require the same reading annotation
+          format. A third may always need the same draft, check, and report
+          loop.
+        </p>
+        <p>
+          A generic AI agent can inspect Canvas every time, but the user still
+          pays the coordination cost if the agent has to rediscover the same
+          course pattern every week.
+        </p>
+
+        <h2 id="what-canvas-pilot-adds">What Canvas Pilot adds</h2>
+        <p>
+          Canvas Pilot uses Canvas access as one input, then adds workflow
+          memory, approval boundaries, per-assignment result files, and a final
+          report. The core loop is:
+        </p>
+        <pre class="code-block">scan Canvas -> approval plan -> student approval -> approved workflow -> review-ready output -> REPORT.md</pre>
+        <p>
+          The public repository ships a generic framework. Real course data,
+          cookies, credentials, assignment inputs, drafts, and local overlays
+          stay on the user's machine.
+        </p>
+
+        <h2 id="open-source-boundary">The open-source boundary</h2>
+        <p>
+          The open-source part is the workflow framework: scanning, planning,
+          approval, dispatch, result files, reporting, hooks, and public-safe
+          skill skeletons. Private course identifiers and user coursework do
+          not belong in the public repo.
+        </p>
+        <p>
+          This is why Canvas Pilot is local-first rather than a hosted homework
+          service. It is built for operators who can run local agents, inspect
+          files, and decide what should or should not be submitted.
+        </p>
+
+        <h2 id="related">Related pages</h2>
+        <p>
+          Read <a href="/compare/canvas-mcp">Canvas Pilot vs Canvas MCP</a>,
+          the <a href="/use-cases/canvas-mcp-workflow-layer">Canvas MCP workflow
+          layer page</a>, or the
+          <a href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">open-source
+          GitHub repo</a>.
+        </p>
+      </article>
+      <aside class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#problem">Problem</a>
+        <a href="#what-canvas-pilot-adds">What it adds</a>
+        <a href="#open-source-boundary">Open-source boundary</a>
+        <a href="#related">Related pages</a>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span><a href="/">Home</a> / <a href="/llms.txt">llms.txt</a></span>
+      </div>
+    </footer>
+  </body>
+</html>

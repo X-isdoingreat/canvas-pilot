@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<!--
+  Shared Task Scheduler XML template for canvas-cron framework. DO NOT import
+  this file directly. canvas_cron.py register <name> renders it with placeholders
+  substituted and writes the result to scripts/cron_templates/_generated/<name>.task.xml
+  as UTF-16 LE BOM (required by `schtasks /create /xml`), then runs schtasks /create.
+
+  Placeholders (filled in by canvas_cron.py:render_task_xml):
+    {{USER_SID}}              - parsed from `whoami /user`
+    {{PROJECT_DIR}}           - absolute path to project root
+    {{PYTHON_EXE}}            - .venv/Scripts/python.exe or sys.executable
+    {{TASK_NAME}}             - CronInstance.task_name (NB: not used inside XML;
+                                schtasks /create /tn supplies it externally)
+    {{DESCRIPTION}}           - human-readable one-line summary for this instance
+    {{START_BOUNDARY}}        - ISO datetime, e.g. "2026-05-17T19:00:00"
+    {{DAYS_INTERVAL}}         - e.g. "2" for every 2 days
+    {{EXECUTION_TIME_LIMIT}}  - ISO 8601 duration, e.g. "PT45M" or "PT5M"
+    {{INSTANCE_NAME}}         - CronInstance.name; passed to `canvas_cron.py fire <name>`
+
+  Defaults baked in (intentional, not parameterized):
+    LogonType=InteractiveToken    user-session context (Canvas cookies live there)
+    RunLevel=LeastPrivilege       not elevated
+    MultipleInstancesPolicy=IgnoreNew  no parallel runs of same instance
+    WakeToRun=true                wake from sleep
+    RunOnlyIfNetworkAvailable=true   Canvas needs net
+-->
+<Task version="1.4" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <RegistrationInfo>
+    <Description>{{DESCRIPTION}}</Description>
+    <Author>canvas-cron</Author>
+  </RegistrationInfo>
+  <Triggers>
+    <CalendarTrigger>
+      <StartBoundary>{{START_BOUNDARY}}</StartBoundary>
+      <Enabled>true</Enabled>
+      <ScheduleByDay>
+        <DaysInterval>{{DAYS_INTERVAL}}</DaysInterval>
+      </ScheduleByDay>
+    </CalendarTrigger>
+  </Triggers>
+  <Principals>
+    <Principal id="Author">
+      <UserId>{{USER_SID}}</UserId>
+      <LogonType>InteractiveToken</LogonType>
+      <RunLevel>LeastPrivilege</RunLevel>
+    </Principal>
+  </Principals>
+  <Settings>
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+    <AllowHardTerminate>true</AllowHardTerminate>
+    <StartWhenAvailable>true</StartWhenAvailable>
+    <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+    <IdleSettings>
+      <StopOnIdleEnd>false</StopOnIdleEnd>
+      <RestartOnIdle>false</RestartOnIdle>
+    </IdleSettings>
+    <AllowStartOnDemand>true</AllowStartOnDemand>
+    <Enabled>true</Enabled>
+    <Hidden>false</Hidden>
+    <RunOnlyIfIdle>false</RunOnlyIfIdle>
+    <WakeToRun>true</WakeToRun>
+    <ExecutionTimeLimit>{{EXECUTION_TIME_LIMIT}}</ExecutionTimeLimit>
+    <Priority>5</Priority>
+  </Settings>
+  <Actions Context="Author">
+    <Exec>
+      <Command>{{PYTHON_EXE}}</Command>
+      <Arguments>{{PROJECT_DIR}}\scripts\canvas_cron.py fire {{INSTANCE_NAME}}</Arguments>
+      <WorkingDirectory>{{PROJECT_DIR}}</WorkingDirectory>
+    </Exec>
+  </Actions>
+</Task>

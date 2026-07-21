@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="zh-CN" class="install-document">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>用本地 AI Agent 安装 Canvas Pilot</title>
+    <meta name="description" content="复制一段提示词，让本地 Agent 下载 Canvas Pilot、询问你的学校、打开 Canvas 登录，并分析最适合固化成第一个长期 Skill 的重复作业。">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/zh/setup">
+    <link rel="alternate" hreflang="en" href="https://canvas-pilot.likelyou.com/setup">
+    <link rel="alternate" hreflang="zh-CN" href="https://canvas-pilot.likelyou.com/zh/setup">
+    <link rel="alternate" hreflang="x-default" href="https://canvas-pilot.likelyou.com/setup">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="用本地 AI Agent 安装 Canvas Pilot">
+    <meta property="og:description" content="本地下载，告诉 Agent 你的学校，登录 Canvas，再查看 Opportunity Skill 的第一个长期 Skill 建议。">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/zh/setup">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "用本地 AI Agent 安装 Canvas Pilot",
+        "description": "复制一段提示词，让本地 Agent 下载 Canvas Pilot、询问你的学校、打开 Canvas 登录，并判断哪个重复作业最适合固化成第一个长期 Skill。",
+        "inLanguage": "zh-CN",
+        "tool": [
+          {"@type": "HowToTool", "name": "具备 shell 和文件访问能力的本地 AI Agent"},
+          {"@type": "HowToTool", "name": "Git 和 Python 3.11 或更高版本"}
+        ],
+        "step": [
+          {"@type": "HowToStep", "name": "下载 Canvas Pilot"},
+          {"@type": "HowToStep", "name": "告诉 Agent 你使用 Canvas 的学校"},
+          {"@type": "HowToStep", "name": "在浏览器里登录 Canvas"},
+          {"@type": "HowToStep", "name": "查看 Opportunity Skill 的建议"}
+        ]
+      }
+    </script>
+  </head>
+  <body class="install-page zh-page">
+    <header class="site-header">
+      <nav class="nav" aria-label="主导航">
+        <a class="brand" href="/">
+          <span class="brand-mark">CP</span>
+          <span>Canvas Pilot</span>
+        </a>
+        <div class="nav-links">
+          <a aria-current="page" href="/zh/setup">安装</a>
+          <a href="#assignment-fit">作业适配</a>
+          <a href="/docs/local-first">本地优先</a>
+          <a href="#install-faq">常见问题</a>
+          <a href="/setup" lang="en" hreflang="en">English</a>
+          <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero install-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">四步完成首次配置</p>
+          <h1>下载、选学校、登录，再选第一个 Skill。</h1>
+          <p class="lede">
+            复制一次提示词。本地 Agent 下载项目，先问学校，打开 Canvas 登录，随后运行 Opportunity 分析。
+          </p>
+          <div class="install-qualifiers" aria-label="首次配置顺序">
+            <p><strong>1. 下载到本机</strong><span>Agent 克隆仓库，或谨慎更新已有副本。</span></p>
+            <p><strong>2. 告诉它你的学校</strong><span>先问学校，不先丢给你技术配置问题。</span></p>
+            <p><strong>3. 在浏览器登录</strong><span>密码和 2FA 只输入学校的 Canvas 页面。</span></p>
+            <p><strong>4. 选择第一个 Skill</strong><span>Opportunity 分析重复作业，然后停下来等你选号。</span></p>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="#setup-prompt">复制四步提示词</a>
+            <a class="button-secondary" href="#assignment-fit">先看作业适配</a>
+          </div>
+        </div>
+
+        <div class="install-prompt-panel" id="setup-prompt">
+          <div class="terminal-bar install-prompt-bar">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-gold"></span>
+            <span class="dot dot-green"></span>
+            <span class="terminal-title">canvas-pilot-setup-zh.txt</span>
+            <button class="copy-button" id="copy-prompt" type="button">复制安装提示词</button>
+          </div>
+          <label class="prompt-label" for="setup-prompt-text">给本地 Agent 的精简安装提示词</label>
+          <textarea id="setup-prompt-text" class="setup-prompt-text" readonly spellcheck="false">请在本机配置 Canvas Pilot：
+
+https://github.com/X-isdoingreat/canvas-pilot.git
+
+克隆仓库；如果已有副本，安全更新但不要覆盖本地配置或无关修改。阅读 AGENTS.md、.agents/skills/canvas-setup/SKILL.md 和 .agents/skills/canvas-skill-opportunity/SKILL.md。
+
+下载完成后先问我：“你在哪所学校使用 Canvas？”确认学校官方 Canvas 登录地址；如果不明确，再问我网址，不要猜。学校和课程信息只写入 Git 忽略的本地文件。
+
+在仓库内配置 Python 环境和必要依赖；任何系统级修改都先问我。
+
+打开交互式浏览器让我登录 Canvas。不要让我把密码或 2FA 发到聊天或终端。验证登录成功。
+
+登录后立即只读运行 canvas-skill-opportunity。检查重复作业、代表性真实 spec，以及 Canvas 的重试和反馈设置；推荐最适合做成第一个长期 Skill 的候选，然后停下来让我选号。
+
+我选号前，不要运行 canvas-bootstrap、创建 route/skill、扫描待办、启动 attempt、解题或写草稿、读取原始答案或成绩、上传、提交、commit、push、deploy，也不要修改 .claude。聊天只用编号别名，完整报告留在本机。</textarea>
+          <div class="prompt-footer">
+            <p id="copy-status" class="copy-status" aria-live="polite">可以复制。粘贴前请先阅读权限和边界。</p>
+            <span>规范仓库：X-isdoingreat/canvas-pilot</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="产品事实">
+        <div class="stat">
+          <strong>先问学校</strong>
+          <span>第一个问题是你在哪所学校使用 Canvas，而不是让你找配置项。</span>
+        </div>
+        <div class="stat">
+          <strong>在浏览器登录</strong>
+          <span>Agent 打开学校官方 Canvas，秘密不会进入聊天记录。</span>
+        </div>
+        <div class="stat">
+          <strong>随后运行 Opportunity</strong>
+          <span>分析重复作业，并询问哪一个应该成为第一个长期 Skill。</span>
+        </div>
+      </section>
+
+      <section class="section first-run-section" id="first-run">
+        <p class="eyebrow">首次运行</p>
+        <h2>严格按照这四步进行。</h2>
+        <p class="section-intro">你只需要回答一个学校问题，再完成一次浏览器登录。本地安装和第一个 Skill 的分析都由 Agent 处理。</p>
+        <ol class="install-steps">
+          <li>
+            <span class="step-index">01</span>
+            <h3>下载</h3>
+            <p>本地 Agent 克隆 Canvas Pilot；如果已经下载，则保留现有配置并谨慎更新。</p>
+          </li>
+          <li>
+            <span class="step-index">02</span>
+            <h3>告诉它学校</h3>
+            <p>Agent 先问你在哪所学校使用 Canvas，再定位官方登录页面；只有不明确时才追问网址。</p>
+          </li>
+          <li>
+            <span class="step-index">03</span>
+            <h3>登录 Canvas</h3>
+            <p>Agent 打开交互式浏览器。SSO 和 2FA 只在学校 Canvas 页面输入。</p>
+          </li>
+          <li>
+            <span class="step-index">04</span>
+            <h3>运行 Opportunity</h3>
+            <p>Agent 比较重复作业，推荐最适合的第一个 Skill，然后停下来等你选择编号。</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" id="assignment-fit">
+        <h2>安装之前，先判断作业是否适合。</h2>
+        <p class="section-intro">
+          Canvas Pilot 最适合真实要求和必要材料都能取得的作业。遇到缺口时，它应该明确报告，而不是假装完成。
+        </p>
+        <div class="fit-layout">
+          <div class="fit-primary">
+            <p class="fit-label">完成课程配置后，尤其适合</p>
+            <div class="fit-list">
+              <article class="fit-item">
+                <h3>代码作业</h3>
+                <p>所有能在 Canvas 交付的代码题，哪怕没有正式 regression harness，也应优先考虑。Agent 仍要找到真实 spec、检查硬性限制并运行可用的复核。</p>
+              </article>
+              <article class="fit-item">
+                <h3>定量与结构化商科作业</h3>
+                <p>数学、会计、经济、统计、金融，以及结构化的 Word/Excel/PDF 商科作业，只要说明和输入可取得，都是强候选。</p>
+              </article>
+              <article class="fit-item">
+                <h3>以客观题为主的 Canvas Quiz</h3>
+                <p>受支持的选择、匹配、判断和数字题适配良好。多次机会、重试前可见反馈、取最高分，会让纠错闭环尤其有价值。</p>
+              </article>
+              <article class="fit-item">
+                <h3>独立短答和短批注</h3>
+                <p>worksheet、短答案和阅读批注，只要每个回答单元都短且可独立检查，即使合计超过 200 词也可以是强候选。</p>
+              </article>
+            </div>
+          </div>
+          <div class="fit-sidebar">
+            <article class="fit-panel fit-conditional">
+              <p class="fit-label">有条件支持</p>
+              <h3>长段连续文字</h3>
+              <p>主要连续 prose 单元约 200 词以上，是不把它选作第一个 Skill 的强降级信号。判断的不是总字数：许多各 10-40 词的独立回答仍可适配良好。</p>
+              <p>可访问的 instructor site、starter repository 或已配置 API 仍可用于取得真实 spec 和参考资料。</p>
+            </article>
+            <article class="fit-panel fit-manual">
+              <p class="fit-label">需要人工接手</p>
+              <h3>任意外部交互网站</h3>
+              <p>不要期待它稳定完成需要单独登录、CAPTCHA、反自动化检查、只看视频或未知浏览器流程的第三方网站作业。</p>
+              <p>New Quizzes/LTI、直接在线文本输入、LockDown Browser、监考、身份验证、线下任务、本人签名和最终 GradeScope 上传都需要你处理。</p>
+            </article>
+          </div>
+        </div>
+        <div class="fit-check">
+          <strong>一个简单判断：</strong>
+          <span>判断真实任务、数字化交付路径和反馈闭环，而不是只看文件扩展名或总字数。如果必须在陌生网站界面里完成操作，请预留人工接手。</span>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="section" id="workflow-boundary">
+          <h2>安装结束时，作业还没有开始。</h2>
+          <p class="section-intro">这段提示词只负责配置本地工具并停止。只有你以后明确提出请求，课程流程才会开始。</p>
+          <ol class="workflow-steps">
+            <li>
+              <span class="workflow-step-name">安装</span>
+              <p>完成本地安装和浏览器登录，判断重复作业并生成定性机会榜单，然后停下来等你选择。</p>
+            </li>
+            <li>
+              <span class="workflow-step-name">选择</span>
+              <p>你选中一个候选项后，Canvas Pilot 才会验证并搭建对应的课程 Skill；选号不构成提交授权。</p>
+            </li>
+            <li>
+              <span class="workflow-step-name">扫描</span>
+              <p>以后你说 <code>scan canvas</code> 时，系统写出计划，然后再次停止。</p>
+            </li>
+            <li>
+              <span class="workflow-step-name">批准</span>
+              <p>你明确选择哪些计划项目可以运行。没有批准的作业不会执行。</p>
+            </li>
+            <li>
+              <span class="workflow-step-name">执行</span>
+              <p>已批准的流程生成草稿、单项结果和报告。提交从来不是静默默认。</p>
+            </li>
+          </ol>
+          <div class="callout workflow-callout">
+            <strong>人工检查仍然重要。</strong>
+            <span>生成的草稿可能不完整。submitted 只表示 Canvas 收到了一次尝试，不代表答案正确，也不代表已经得到成绩。</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section install-requirements" id="setup-boundaries">
+        <h2>默认留在本机，限制也说清楚。</h2>
+        <p class="section-intro">Canvas Pilot 运行在本地 Agent 所在的机器上。登录、课程信息、源文件、草稿和运行状态都保留在本机。</p>
+        <div class="split">
+          <div>
+            <h3>你需要准备</h3>
+            <ul class="requirement-list">
+              <li>Codex 或类似的本地 Agent，并且它有 shell 和文件访问能力。</li>
+              <li>Git 和 Python 3.11 或更高版本。</li>
+              <li>可以打开交互式 Chromium 窗口的桌面环境。</li>
+              <li>正常的 Canvas 登录和 2FA 方式。</li>
+              <li>以后批准的作业所需的真实材料。</li>
+            </ul>
+          </div>
+          <div>
+            <h3>安装不授权这些操作</h3>
+            <ul class="requirement-list">
+              <li>安装时读取或执行 pending 作业。</li>
+              <li>上传或提交任何 Canvas 作业。</li>
+              <li>公开课程信息或凭据。</li>
+              <li>从本地仓库 commit、push 或 deploy。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout install-callout">
+          <strong>不要把秘密发到聊天里。</strong>
+          <span>密码和 2FA 只输入 Canvas 浏览器。保留的 session cookie 也属于敏感的本地凭据。</span>
+        </div>
+      </section>
+
+      <section class="section install-faq" id="install-faq">
+        <h2>复制之前，先确认这几件事。</h2>
+        <div class="faq-list">
+          <details>
+            <summary>可以使用浏览器里的普通聊天机器人吗？</summary>
+            <p>不可以。安装需要本地 Agent 具备 shell、文件、Git、Python 访问能力，并能打开交互式浏览器。</p>
+          </details>
+          <details>
+            <summary>安装会直接开始做作业吗？</summary>
+            <p>不会。提示词明确禁止在安装期间扫描、规划、执行、上传或提交作业。Agent 必须在验证安装后停止。</p>
+          </details>
+          <details>
+            <summary>可以读取课程外部网站吗？</summary>
+            <p>可以读取可访问的外部规格和参考资料，但不承诺操作任意第三方作业网站。</p>
+          </details>
+          <details>
+            <summary>遇到不支持的任务会怎样？</summary>
+            <p>流程会记录 error 或 skipped，说明缺少的能力或材料，并给出人工下一步。它不应该伪造成功。</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span>
+          <a href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a> /
+          <a href="https://x.com/X_isdoingreat">X</a> /
+          <a href="mailto:X_isdoingreat@proton.me">Email</a> /
+          <a href="/llms.txt">llms.txt</a>
+        </span>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const button = document.querySelector("#copy-prompt");
+        const prompt = document.querySelector("#setup-prompt-text");
+        const status = document.querySelector("#copy-status");
+
+        const markCopied = () => {
+          button.textContent = "已复制";
+          status.textContent = "已复制。现在可以把提示词粘贴到本地 Agent。";
+          window.setTimeout(() => {
+            button.textContent = "复制安装提示词";
+          }, 2400);
+        };
+
+        button.addEventListener("click", async () => {
+          const text = prompt.value.trim();
+          let copied = false;
+
+          if (window.isSecureContext && navigator.clipboard) {
+            try {
+              await navigator.clipboard.writeText(text);
+              copied = true;
+            } catch (error) {
+              copied = false;
+            }
+          }
+
+          if (!copied) {
+            prompt.focus();
+            prompt.select();
+            prompt.setSelectionRange(0, prompt.value.length);
+            try {
+              copied = document.execCommand("copy");
+            } catch (error) {
+              copied = false;
+            }
+          }
+
+          if (copied) {
+            markCopied();
+          } else {
+            status.textContent = "复制失败。提示词已经选中，请手动复制。";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

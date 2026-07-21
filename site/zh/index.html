@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="zh-CN" class="landing-document">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Canvas Pilot - 重复作业杀手</title>
+    <meta name="description" content="Canvas Pilot 自己去 Canvas 查作业要求、找课程资料，再把重复作业交给对应的长期 Skill。">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/zh/install">
+    <link rel="alternate" hreflang="en" href="https://canvas-pilot.likelyou.com/install">
+    <link rel="alternate" hreflang="zh-CN" href="https://canvas-pilot.likelyou.com/zh/install">
+    <link rel="alternate" hreflang="x-default" href="https://canvas-pilot.likelyou.com/install">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="重复作业杀手">
+    <meta property="og:description" content="Canvas Pilot 自己去 Canvas 查要求、找资料，再把作业交给对应 Skill。">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/zh/install">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Canvas Pilot",
+        "description": "Canvas Pilot 是一个本地优先的 Canvas LMS AI Agent。它读取作业要求与课程资料，再把重复作业交给可复用的长期 Skill。",
+        "codeRepository": "https://github.com/X-isdoingreat/canvas-pilot",
+        "programmingLanguage": "Python",
+        "license": "https://github.com/X-isdoingreat/canvas-pilot/blob/main/LICENSE",
+        "url": "https://canvas-pilot.likelyou.com/zh/install",
+        "inLanguage": "zh-CN",
+        "author": {
+          "@type": "Person",
+          "name": "X_isdoingreat",
+          "url": "https://github.com/X-isdoingreat"
+        }
+      }
+    </script>
+    <script src="/landing.js" defer></script>
+  </head>
+  <body class="landing-page zh-page">
+    <div class="landing-fold">
+      <header class="site-header landing-header">
+        <nav class="nav landing-nav" aria-label="主导航">
+          <a class="brand" href="/zh/install">
+            <span class="brand-mark">CP</span>
+            <span>Canvas Pilot</span>
+          </a>
+          <div class="nav-links landing-nav-links">
+            <a href="#how-it-works">工作方式</a>
+            <a href="/zh/install">安装</a>
+            <a href="/install" lang="en" hreflang="en">English</a>
+            <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="landing-main">
+        <section class="landing-hero" aria-labelledby="hero-title">
+          <div class="landing-hero-copy">
+            <h1 id="hero-title">重复作业杀手</h1>
+            <p class="landing-lede">大家都在用 AI 写作业，只是还得自己去 Canvas 查要求、找资料、再交给 AI；Canvas Pilot 会自己完成这一整套流程。</p>
+            <div class="landing-prompt-card">
+              <div class="landing-prompt-heading">
+                <span>复制这段话给你的agent，开始使用吧</span>
+                <button
+                  class="landing-prompt-toggle"
+                  id="toggle-agent-prompt"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="home-prompt-preview-text"
+                  data-expand-label="展开"
+                  data-collapse-label="收起"
+                >展开</button>
+              </div>
+              <pre class="landing-prompt-preview" id="home-prompt-preview-text" tabindex="0">请在本机配置 Canvas Pilot：
+
+https://github.com/X-isdoingreat/canvas-pilot.git</pre>
+              <div class="landing-prompt-actions">
+                <button
+                  class="landing-copy-button"
+                  id="copy-agent-prompt"
+                  type="button"
+                  data-copy-label="复制给 Agent"
+                  data-copied-label="已复制"
+                >复制给 Agent</button>
+                <p
+                  class="landing-copy-status"
+                  id="home-copy-status"
+                  data-success="已复制。现在把它粘贴给你的 Agent。"
+                  data-failure="复制失败。请打开安装页手动复制。"
+                  aria-live="polite"
+                ></p>
+              </div>
+            </div>
+            <textarea id="home-setup-prompt" hidden readonly>请在本机配置 Canvas Pilot：
+
+https://github.com/X-isdoingreat/canvas-pilot.git
+
+克隆仓库；如果已有副本，安全更新但不要覆盖本地配置或无关修改。阅读 AGENTS.md、.agents/skills/canvas-setup/SKILL.md 和 .agents/skills/canvas-skill-opportunity/SKILL.md。
+
+下载完成后先问我：“你在哪所学校使用 Canvas？”确认学校官方 Canvas 登录地址；如果不明确，再问我网址，不要猜。学校和课程信息只写入 Git 忽略的本地文件。
+
+在仓库内配置 Python 环境和必要依赖；任何系统级修改都先问我。
+
+打开交互式浏览器让我登录 Canvas。不要让我把密码或 2FA 发到聊天或终端。验证登录成功。
+
+登录后立即只读运行 canvas-skill-opportunity。检查重复作业、代表性真实 spec，以及 Canvas 的重试和反馈设置；推荐最适合做成第一个长期 Skill 的候选，然后停下来让我选号。
+
+我选号前，不要运行 canvas-bootstrap、创建 route/skill、扫描待办、启动 attempt、解题或写草稿、读取原始答案或成绩、上传、提交、commit、push、deploy，也不要修改 .claude。聊天只用编号别名，完整报告留在本机。</textarea>
+          </div>
+
+          <div class="landing-loop" aria-label="使用 Canvas Pilot 前后的每周作业流程">
+            <div class="loop-before">
+              <p class="loop-label loop-manual-title">每周都要手动做 4 步</p>
+              <ol class="loop-manual-list">
+                <li>查找课程文件</li>
+                <li>查看作业要求</li>
+                <li>完成作业答案</li>
+                <li>提交作业结果</li>
+              </ol>
+            </div>
+            <div class="loop-transition" data-automation-transition="4-to-1" aria-hidden="true">
+              <span class="loop-transition-count">4</span>
+              <span class="loop-transition-arrow">↓</span>
+              <span class="loop-transition-count loop-transition-one">1</span>
+            </div>
+            <div class="loop-after">
+              <strong class="loop-automation-title"><span>一个 Agent Skill</span>自动完成整套流程</strong>
+              <div class="loop-skill-frame" data-agent-skill>
+                <div class="loop-skill-header">
+                  <span class="loop-skill-kind">可复用 Agent Skill</span>
+                  <strong class="loop-skill-name">Canvas Pilot</strong>
+                  <span class="loop-automation-kicker">自动运行</span>
+                </div>
+                <div class="loop-automation-flow">
+                  <span class="loop-automation-rail" aria-hidden="true">
+                    <span class="loop-automation-pulse"></span>
+                  </span>
+                  <ol class="loop-auto-list" data-automation-workflow>
+                    <li data-workflow-step><span class="loop-step-check" aria-hidden="true"></span><span>读取 Canvas 文件</span></li>
+                    <li data-workflow-step><span class="loop-step-check" aria-hidden="true"></span><span>读懂作业要求</span></li>
+                    <li data-workflow-step><span class="loop-step-check" aria-hidden="true"></span><span>完成作业</span></li>
+                    <li data-workflow-step><span class="loop-step-check" aria-hidden="true"></span><span>准备好交回 Canvas</span></li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <a class="how-it-works-tease" id="how-it-works" href="#video-series">
+        <span>How it works</span>
+      </a>
+    </div>
+
+    <main>
+      <section class="video-series" id="video-series" aria-labelledby="video-series-title">
+        <h2 class="visually-hidden" id="video-series-title">Canvas Pilot 工作方式视频</h2>
+        <div class="video-grid">
+          <article class="video-entry video-entry-quiz">
+            <div class="video-placeholder" data-video-state="empty" role="img" aria-label="Quiz 工作方式视频预留位置"></div>
+            <div class="video-caption">
+              <h3>Quiz</h3>
+              <p>完成第一遍，读取 Canvas 成绩和反馈，再修正第二遍。</p>
+            </div>
+          </article>
+
+          <article class="video-entry">
+            <div class="video-placeholder" data-video-state="empty" role="img" aria-label="代码作业工作方式视频预留位置"></div>
+            <div class="video-caption">
+              <h3>代码作业</h3>
+              <p>从真实课程要求到通过测试的代码。</p>
+            </div>
+          </article>
+
+          <article class="video-entry">
+            <div class="video-placeholder" data-video-state="empty" role="img" aria-label="文档作业工作方式视频预留位置"></div>
+            <div class="video-caption">
+              <h3>文档作业</h3>
+              <p>会计、商科，以及结构化 Word 作业。</p>
+            </div>
+          </article>
+
+          <article class="video-entry video-entry-wide">
+            <div class="video-placeholder" data-video-state="empty" role="img" aria-label="Canvas 内作业工作方式视频预留位置"></div>
+            <div class="video-caption">
+              <h3>Canvas 内作业</h3>
+              <p>阅读、短批注、Quiz，以及 Canvas 原生作业。</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="landing-fit" aria-labelledby="fit-title">
+        <div class="landing-fit-heading">
+          <h2 id="fit-title">适合作业，比作业长短更重要。</h2>
+          <p>很长的代码题，也可能比一篇连续长作文更适合成为第一个 Skill。</p>
+        </div>
+        <div class="landing-fit-columns">
+          <div>
+            <h3>擅长完成</h3>
+            <p>代码、数学、统计、经济、会计、商科文档、Canvas Quiz、阅读，以及相互独立的短回答。</p>
+          </div>
+          <div>
+            <h3>需要人工接手</h3>
+            <p>连续 200 词以上的作文、表演类作业，以及需要单独登录、CAPTCHA 或有反自动化限制的第三方网站。</p>
+            <a href="/zh/setup#assignment-fit">查看完整作业适配说明</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer landing-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span>
+          <a href="/zh/install">安装</a> /
+          <a href="/compare/canvas-mcp">对比 Canvas MCP</a> /
+          <a href="/faq">常见问题</a> /
+          <a href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

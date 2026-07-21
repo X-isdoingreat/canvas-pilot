@@ -1,0 +1,4 @@
+interface:
+  display_name: "Canvas Submit"
+  short_description: "Submit one verified Canvas item with exact authorization"
+  default_prompt: "Use $canvas-submit only for my exact later-message command to submit one approved Canvas item."

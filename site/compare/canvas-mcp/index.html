@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas Pilot vs Canvas MCP</title>
+    <meta name="description" content="Canvas MCP servers expose Canvas tools. Canvas Pilot adds recurring course workflow memory, approval boundaries, verification, and local run reports.">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/compare/canvas-mcp">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Canvas Pilot vs Canvas MCP">
+    <meta property="og:description" content="Canvas access and recurring coursework workflows are different layers.">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/compare/canvas-mcp">
+    <meta property="og:type" content="article">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/"><span class="brand-mark">CP</span><span>Canvas Pilot</span></a>
+        <div class="nav-links">
+          <a href="/articles/workflow-layer-above-canvas-mcp">Article</a>
+          <a href="/docs/local-first">Local-first</a>
+          <a href="/faq">FAQ</a>
+          <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+    <main class="article">
+      <article class="article-body">
+        <p class="eyebrow">Comparison</p>
+        <h1>Canvas Pilot vs Canvas MCP</h1>
+        <p class="lede">
+          Canvas MCP servers let an agent access Canvas. Canvas Pilot turns
+          repeated Canvas coursework into local, reusable workflows.
+        </p>
+
+        <h2 id="short-version">Short version</h2>
+        <p>
+          The difference is not whether an agent can write. A general agent can
+          already draft text or code if it has enough context. The difference is
+          whether each course becomes a durable workflow that can be reused next
+          week without rediscovering the same pattern from scratch.
+        </p>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>Canvas MCP server</th>
+              <th>Canvas Pilot</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>What is it?</td>
+              <td>A tool server that exposes Canvas API actions to an agent.</td>
+              <td>A local student workflow system built around recurring course patterns.</td>
+            </tr>
+            <tr>
+              <td>What does it remember?</td>
+              <td>Credentials, available tools, and current Canvas data.</td>
+              <td>Where specs live, what output format is expected, and what checks must pass.</td>
+            </tr>
+            <tr>
+              <td>What happens next week?</td>
+              <td>The agent usually asks Canvas again and reasons from the current prompt.</td>
+              <td>The course workflow is reused and adjusted only when the pattern changes.</td>
+            </tr>
+            <tr>
+              <td>Where is approval?</td>
+              <td>Depends on the host agent and prompt discipline.</td>
+              <td>scan canvas writes a plan and stops; execute runs only approved work.</td>
+            </tr>
+            <tr>
+              <td>Output</td>
+              <td>Tool responses, summaries, fetched files, or ad hoc drafts.</td>
+              <td>Review-ready drafts, result.json per assignment, and REPORT.md.</td>
+            </tr>
+            <tr>
+              <td>Privacy model</td>
+              <td>Depends on the server and host configuration.</td>
+              <td>Course overlays, runs, drafts, cookies, and credentials stay local.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="where-mcp-fits">Where Canvas MCP fits</h2>
+        <p>
+          A strong Canvas MCP server can be a useful access layer. It can expose
+          assignments, modules, files, pages, grades, and submissions to an
+          agent. Canvas Pilot can use that kind of access, but it still needs
+          the workflow layer above it.
+        </p>
+        <p>
+          Canvas Pilot decides which assignments matter today, groups them by
+          urgency, maps each item to a course workflow, stops for approval,
+          writes result files, and closes the run with a report.
+        </p>
+
+        <h2 id="practical-difference">Practical difference</h2>
+        <p>With a Canvas MCP server, a useful prompt might be:</p>
+        <pre class="code-block">Check my Canvas assignments and help me understand what is due.</pre>
+        <p>With Canvas Pilot, the intended workflow is:</p>
+        <pre class="code-block">scan canvas
+review the approval plan
+approve selected work
+inspect REPORT.md and final drafts</pre>
+
+        <h2 id="bottom-line">Bottom line</h2>
+        <p>
+          Canvas MCP is about access. Canvas Pilot is about reusable course
+          workflows. They are complementary, but they are not the same product.
+        </p>
+      </article>
+      <aside class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#short-version">Short version</a>
+        <a href="#where-mcp-fits">Where MCP fits</a>
+        <a href="#practical-difference">Practical difference</a>
+        <a href="#bottom-line">Bottom line</a>
+      </aside>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span><a href="/">Home</a> / <a href="/llms.txt">llms.txt</a></span>
+      </div>
+    </footer>
+  </body>
+</html>

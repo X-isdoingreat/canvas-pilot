@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas LMS AI Agent for Recurring Coursework - Canvas Pilot</title>
+    <meta name="description" content="Canvas Pilot is a local-first Canvas LMS AI agent for Codex and Claude Code power users who want recurring coursework to become reusable scan, approval, and execute workflows.">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/use-cases/canvas-lms-ai-agent">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Canvas LMS AI Agent for Recurring Coursework">
+    <meta property="og:description" content="A local-first workflow layer for recurring Canvas assignments, built for AI power users.">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/use-cases/canvas-lms-ai-agent">
+    <meta property="og:type" content="article">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/"><span class="brand-mark">CP</span><span>Canvas Pilot</span></a>
+        <div class="nav-links">
+          <a href="/compare/canvas-mcp">Compare</a>
+          <a href="/articles/workflow-layer-above-canvas-mcp">Article</a>
+          <a href="/docs/power-user-guide">Power users</a>
+          <a href="/faq">FAQ</a>
+          <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="article">
+      <article class="article-body">
+        <p class="article-meta">Use case updated July 4, 2026 by X_isdoingreat</p>
+        <h1>Canvas LMS AI Agent for Recurring Coursework</h1>
+        <p class="lede">
+          Canvas Pilot is a local-first Canvas LMS AI agent for people who
+          already know how to operate Codex, Claude Code, or similar local AI
+          agents. Its job is to turn repeated Canvas coursework into reusable
+          scan, approval, and execute workflows.
+        </p>
+
+        <h2 id="use-case">The use case</h2>
+        <p>
+          Many Canvas assignments are not genuinely new every week. The title
+          changes, the due date changes, and the reading or problem set changes,
+          but the underlying pattern repeats. A code course keeps linking to the
+          real spec on an external site. A reading course keeps asking for the
+          same annotation format. A problem course keeps using the same source
+          and delivery workflow.
+        </p>
+        <p>
+          Canvas Pilot treats that repetition as the product. Instead of asking
+          an agent to rediscover the course from scratch, the workflow remembers
+          where to look, what the output should look like, what checks matter,
+          and when the student must approve the next step.
+        </p>
+
+        <h2 id="workflow">The workflow</h2>
+        <pre class="code-block">scan Canvas -> approval plan -> student approval -> approved workflow -> review-ready output -> REPORT.md</pre>
+        <p>
+          The scan step lists pending Canvas work and writes an approval plan.
+          It does not start doing assignments. After the student approves
+          selected items, Canvas Pilot dispatches those items into
+          course-specific workflows and writes a report that can be reviewed
+          before submission.
+        </p>
+
+        <h2 id="power-users">Why it is strongest for AI power users</h2>
+        <p>
+          If you already use local agents well, Canvas Pilot can remove a large
+          amount of repeated orchestration. You no longer need to repeatedly
+          explain the same course pattern, find the same hidden spec source, or
+          rebuild the same draft-and-check routine by hand.
+        </p>
+        <p>
+          In that setting, recurring coursework can feel close to a one-command
+          workflow: scan the course, approve the plan, run the selected
+          workflows, then review the outputs. If you are not comfortable with
+          local agent tooling, terminal-driven workflows, and reviewing drafts,
+          the current public preview will feel difficult.
+        </p>
+
+        <h2 id="not-api-wrapper">Not just a Canvas API wrapper</h2>
+        <p>
+          Canvas API clients and Canvas MCP servers can expose assignments,
+          modules, files, submissions, and pages to an agent. That access layer
+          is useful, but access is not the same as durable workflow memory.
+        </p>
+        <p>
+          Canvas Pilot sits above the access layer. It is designed to remember
+          recurring course shapes, preserve an approval boundary, run repeatable
+          workflows, and write result files that make the run inspectable.
+        </p>
+
+        <h2 id="boundary">The boundary</h2>
+        <p>
+          Canvas Pilot is not a hosted homework service and not a silent
+          auto-submit bot. The default mode is draft production and student
+          review. Private course overlays, credentials, cookies, runs, drafts,
+          and real identifiers stay local.
+        </p>
+        <p>
+          The public repo contains the generic framework and public-safe
+          examples. The user's real courses stay on their machine.
+        </p>
+
+        <h2 id="start">Start here</h2>
+        <p>
+          Read the <a href="/compare/canvas-mcp">Canvas Pilot vs Canvas MCP</a>
+          comparison, the <a href="/articles/workflow-layer-above-canvas-mcp">workflow
+          layer article</a>, or the
+          <a href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">public GitHub repo</a>.
+        </p>
+      </article>
+      <aside class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#use-case">Use case</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#power-users">Power users</a>
+        <a href="#not-api-wrapper">Not API wrapper</a>
+        <a href="#boundary">Boundary</a>
+        <a href="#start">Start here</a>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span><a href="/">Home</a> / <a href="/llms.txt">llms.txt</a></span>
+      </div>
+    </footer>
+  </body>
+</html>

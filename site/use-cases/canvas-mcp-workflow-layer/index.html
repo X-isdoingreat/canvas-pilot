@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas MCP Workflow Layer - Canvas Pilot</title>
+    <meta name="description" content="Canvas Pilot is a workflow layer above Canvas MCP: access plus recurring course memory, approval plans, verification, and review-ready reports.">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/use-cases/canvas-mcp-workflow-layer">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Canvas MCP Workflow Layer">
+    <meta property="og:description" content="Canvas MCP exposes access. Canvas Pilot adds recurring coursework workflow memory above that access layer.">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/use-cases/canvas-mcp-workflow-layer">
+    <meta property="og:type" content="article">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/"><span class="brand-mark">CP</span><span>Canvas Pilot</span></a>
+        <div class="nav-links">
+          <a href="/compare/canvas-mcp">Compare</a>
+          <a href="/articles/workflow-layer-above-canvas-mcp">Article</a>
+          <a href="/docs/power-user-guide">Power users</a>
+          <a href="/faq">FAQ</a>
+          <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="article">
+      <article class="article-body">
+        <p class="article-meta">Use case updated July 6, 2026 by X_isdoingreat</p>
+        <h1>Canvas MCP Workflow Layer</h1>
+        <p class="lede">
+          Canvas MCP servers solve the access problem: they let an AI agent see
+          Canvas LMS data. Canvas Pilot solves a different problem: it turns
+          repeated course patterns into reusable, review-first workflows.
+        </p>
+
+        <h2 id="access-vs-workflow">Canvas access is not the workflow</h2>
+        <p>
+          A Canvas MCP server can expose assignments, files, modules, pages,
+          and submission endpoints. That is useful infrastructure, but it does
+          not remember that one course always links to an external spec, another
+          always wants a fixed annotation format, and a third always needs the
+          same PDF rendering and check loop.
+        </p>
+        <p>
+          Canvas Pilot sits above Canvas access. It treats repeated course
+          structure as the product surface.
+        </p>
+
+        <h2 id="workflow-layer">What the workflow layer contains</h2>
+        <ul>
+          <li>Scan first, then stop for approval.</li>
+          <li>Route approved work into recurring course workflows.</li>
+          <li>Keep private course overlays local and gitignored.</li>
+          <li>Write one result file per item plus a final REPORT.md.</li>
+          <li>Default to review-ready drafts, not automatic submission.</li>
+        </ul>
+
+        <h2 id="when-to-use">When this matters</h2>
+        <p>
+          If an agent only needs to fetch a Canvas assignment once, a Canvas MCP
+          tool may be enough. If the same kind of assignment comes back every
+          week, the useful product is not another API call. It is a repeatable
+          workflow that knows where the real spec lives, what output format is
+          expected, and what checks should run before the student reviews it.
+        </p>
+
+        <h2 id="start">Start here</h2>
+        <p>
+          Read the longer <a href="/compare/canvas-mcp">Canvas Pilot vs Canvas
+          MCP comparison</a>, the
+          <a href="/articles/workflow-layer-above-canvas-mcp">workflow layer
+          article</a>, or the
+          <a href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub repo</a>.
+        </p>
+      </article>
+      <aside class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#access-vs-workflow">Access vs workflow</a>
+        <a href="#workflow-layer">Workflow layer</a>
+        <a href="#when-to-use">When to use</a>
+        <a href="#start">Start here</a>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span><a href="/">Home</a> / <a href="/llms.txt">llms.txt</a></span>
+      </div>
+    </footer>
+  </body>
+</html>

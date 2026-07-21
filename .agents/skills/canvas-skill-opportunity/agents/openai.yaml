@@ -1,0 +1,4 @@
+interface:
+  display_name: "Canvas Skill Opportunity"
+  short_description: "Rank recurring Canvas work worth turning into a durable skill"
+  default_prompt: "Use $canvas-skill-opportunity to rank my recurring Canvas assignment patterns and stop before creating a skill."

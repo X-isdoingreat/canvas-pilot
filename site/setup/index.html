@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en" class="install-document">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Install Canvas Pilot with a local AI agent</title>
+    <meta name="description" content="Copy one prompt to download Canvas Pilot, tell the local agent which school you use, log in to Canvas, and choose the first recurring workflow to turn into a skill.">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/setup">
+    <link rel="alternate" hreflang="en" href="https://canvas-pilot.likelyou.com/setup">
+    <link rel="alternate" hreflang="zh-CN" href="https://canvas-pilot.likelyou.com/zh/setup">
+    <link rel="alternate" hreflang="x-default" href="https://canvas-pilot.likelyou.com/setup">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Install Canvas Pilot with a local AI agent">
+    <meta property="og:description" content="Download locally, name your school, log in to Canvas, and review the Opportunity skill's first-skill recommendation.">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/setup">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta name="twitter:card" content="summary">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Set up Canvas Pilot with a local AI agent",
+        "description": "Copy one prompt to download Canvas Pilot, tell the local agent which school you use, complete Canvas login, and review which recurring work should become the first durable skill.",
+        "inLanguage": "en",
+        "tool": [
+          {"@type": "HowToTool", "name": "A local AI agent with shell and file access"},
+          {"@type": "HowToTool", "name": "Git and Python 3.11 or newer"}
+        ],
+        "step": [
+          {"@type": "HowToStep", "name": "Download Canvas Pilot"},
+          {"@type": "HowToStep", "name": "Tell the agent which school you use"},
+          {"@type": "HowToStep", "name": "Log in to Canvas in the browser"},
+          {"@type": "HowToStep", "name": "Review the Opportunity skill recommendation"}
+        ]
+      }
+    </script>
+  </head>
+  <body class="install-page">
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/">
+          <span class="brand-mark">CP</span>
+          <span>Canvas Pilot</span>
+        </a>
+        <div class="nav-links">
+          <a aria-current="page" href="/setup">Setup</a>
+          <a href="#assignment-fit">Assignment fit</a>
+          <a href="/docs/local-first">Local-first</a>
+          <a href="#install-faq">FAQ</a>
+          <a href="/zh/setup" lang="zh-CN" hreflang="zh-CN">中文</a>
+          <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero install-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Four-step local setup</p>
+          <h1>Download. Name your school. Log in. Choose a skill.</h1>
+          <p class="lede">
+            Copy one prompt. Your agent downloads Canvas Pilot, asks your
+            school, opens Canvas login, then recommends the first durable skill.
+          </p>
+          <div class="install-qualifiers" aria-label="First-run sequence">
+            <p><strong>1. Download locally</strong><span>The Agent clones or carefully updates the repository.</span></p>
+            <p><strong>2. Tell it your school</strong><span>It finds the official Canvas login instead of asking for config jargon.</span></p>
+            <p><strong>3. Log in privately</strong><span>Credentials and 2FA stay in the Canvas browser.</span></p>
+            <p><strong>4. Choose the first skill</strong><span>Opportunity analyzes recurring work and stops for your number.</span></p>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="#setup-prompt">Copy the four-step prompt</a>
+            <a class="button-secondary" href="#assignment-fit">Check assignment fit</a>
+          </div>
+        </div>
+
+        <div class="install-prompt-panel" id="setup-prompt">
+          <div class="terminal-bar install-prompt-bar">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-gold"></span>
+            <span class="dot dot-green"></span>
+            <span class="terminal-title">canvas-pilot-setup.txt</span>
+            <button class="copy-button" id="copy-prompt" type="button">Copy setup prompt</button>
+          </div>
+          <label class="prompt-label" for="setup-prompt-text">Setup prompt for your local agent</label>
+<textarea id="setup-prompt-text" class="setup-prompt-text" readonly spellcheck="false">Set up Canvas Pilot locally from:
+
+https://github.com/X-isdoingreat/canvas-pilot.git
+
+Clone the repository, or safely update an existing copy without overwriting local configuration or unrelated changes. Read AGENTS.md, .agents/skills/canvas-setup/SKILL.md, and .agents/skills/canvas-skill-opportunity/SKILL.md.
+
+After downloading, ask me exactly: "Which school do you use Canvas through?" Resolve the school's official Canvas login URL. If it is ambiguous, ask me for the URL; never guess. Keep school and course details in gitignored local files.
+
+Set up a repo-local Python environment and required dependencies. Ask before any system-wide change.
+
+Open an interactive browser so I can log in to Canvas. Never ask me to put credentials or 2FA in chat or the terminal. Verify authentication.
+
+Immediately after login, run canvas-skill-opportunity read-only. Inspect recurring work, representative real specs, and Canvas retry/feedback settings. Recommend which candidate should become the first durable skill, then stop and ask me to choose a number.
+
+Until I choose: do not run canvas-bootstrap, create a route or skill, scan pending work, start an attempt, solve or draft work, read raw answers or grades, upload, submit, commit, push, deploy, or modify .claude. Use numbered aliases in chat and keep the full report local.</textarea>
+          <div class="prompt-footer">
+            <p id="copy-status" class="copy-status" aria-live="polite">Ready to copy. Review the boundaries before you paste it.</p>
+            <span>Canonical repo: X-isdoingreat/canvas-pilot</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Setup facts">
+        <div class="stat">
+          <strong>School first</strong>
+          <span>The first question is human: which school do you use Canvas through?</span>
+        </div>
+        <div class="stat">
+          <strong>Login in the browser</strong>
+          <span>The agent opens the official Canvas login and keeps secrets out of chat.</span>
+        </div>
+        <div class="stat">
+          <strong>Opportunity runs next</strong>
+          <span>It analyzes recurring work and asks which candidate should become the first skill.</span>
+        </div>
+      </section>
+
+      <section class="section first-run-section" id="first-run">
+        <p class="eyebrow">First run</p>
+        <h2>Four steps, in this order.</h2>
+        <p class="section-intro">You answer one human question and complete one browser login. The Agent handles the local setup and first-skill analysis.</p>
+        <ol class="install-steps">
+          <li>
+            <span class="step-index">01</span>
+            <h3>Download</h3>
+            <p>The local Agent clones Canvas Pilot or updates an existing copy without overwriting local configuration.</p>
+          </li>
+          <li>
+            <span class="step-index">02</span>
+            <h3>Name your school</h3>
+            <p>The Agent asks which school you use, then resolves the official Canvas login. It asks for a URL only when needed.</p>
+          </li>
+          <li>
+            <span class="step-index">03</span>
+            <h3>Log in</h3>
+            <p>An interactive Canvas browser opens. You enter SSO and 2FA there, never in the Agent chat.</p>
+          </li>
+          <li>
+            <span class="step-index">04</span>
+            <h3>Run Opportunity</h3>
+            <p>The Agent compares recurring work, recommends the best first skill, and stops for your numbered choice.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" id="assignment-fit">
+        <h2>Know the fit before you install.</h2>
+        <p class="section-intro">
+          Canvas Pilot works best when the real instructions and required
+          materials are reachable. It reports gaps instead of pretending a task finished.
+        </p>
+        <div class="fit-layout">
+          <div class="fit-primary">
+            <p class="fit-label">Strong fit after course setup</p>
+            <div class="fit-list">
+              <article class="fit-item">
+                <h3>Code assignments</h3>
+                <p>Canvas-submittable code is a strong first-skill candidate even without a formal regression harness. The agent still finds the real spec, checks constraints, and runs whatever verification is available.</p>
+              </article>
+              <article class="fit-item">
+                <h3>Quantitative and business work</h3>
+                <p>Math, accounting, economics, statistics, finance, and structured Word/Excel/PDF business work are strong candidates when the instructions and inputs are reachable.</p>
+              </article>
+              <article class="fit-item">
+                <h3>Mostly objective Canvas quizzes</h3>
+                <p>Supported choice, matching, true/false, and numeric quizzes fit well. Multiple attempts plus feedback visible before retry and keep-highest scoring make the correction loop especially useful.</p>
+              </article>
+              <article class="fit-item">
+                <h3>Independent short-form work</h3>
+                <p>Worksheets, short answers, and reading annotations can fit well when each response is brief and independently checkable, even when all responses together exceed 200 words.</p>
+              </article>
+            </div>
+          </div>
+          <div class="fit-sidebar">
+            <article class="fit-panel fit-conditional">
+              <p class="fit-label">Conditional fit</p>
+              <h3>Long continuous prose</h3>
+              <p>A main continuous prose unit around 200 words or more is a strong reason not to choose that workflow as the first skill. Total word count is not the test: many separate 10-40 word answers can still fit well.</p>
+              <p>Accessible instructor sites, starter repositories, and configured APIs may still supply the real spec or reference material.</p>
+            </article>
+            <article class="fit-panel fit-manual">
+              <p class="fit-label">Manual handoff</p>
+              <h3>Arbitrary external portals</h3>
+              <p>Do not expect reliable completion inside third-party sites with separate logins, CAPTCHA, anti-bot checks, video-only tasks, or unknown browser flows.</p>
+              <p>New Quizzes/LTI, direct online text entry, LockDown Browser, proctoring, identity checks, in-person work, signatures, and final GradeScope upload stay with you.</p>
+            </article>
+          </div>
+        </div>
+        <div class="fit-check">
+          <strong>A useful rule:</strong>
+          <span>Judge the real task, its digital delivery path, and its feedback loop; do not rely on the file extension or total word count alone. If completion must happen inside an unfamiliar website UI, plan for a manual handoff.</span>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="section" id="workflow-boundary">
+          <h2>Setup ends before coursework begins.</h2>
+          <p class="section-intro">The pasted prompt configures the local tool and stops. Coursework starts only in a later, explicit request.</p>
+          <ol class="workflow-steps">
+            <li>
+              <span class="workflow-step-name">Set up</span>
+              <p>Install locally, complete browser login, assess recurring workflows, and stop for your choice.</p>
+            </li>
+            <li>
+              <span class="workflow-step-name">Choose</span>
+              <p>Select one recommended candidate. Only then may Canvas Pilot verify and scaffold that course skill; selection does not authorize submission.</p>
+            </li>
+            <li>
+              <span class="workflow-step-name">Scan</span>
+              <p>When you later say <code>scan canvas</code>, the system writes a plan and stops again.</p>
+            </li>
+            <li>
+              <span class="workflow-step-name">Approve</span>
+              <p>You choose exactly which planned items may run. Unapproved work does not execute.</p>
+            </li>
+            <li>
+              <span class="workflow-step-name">Execute</span>
+              <p>Approved workflows produce drafts, per-item results, and a report. Submission is never the silent default.</p>
+            </li>
+          </ol>
+          <div class="callout workflow-callout">
+            <strong>Review still matters.</strong>
+            <span>A generated draft can be incomplete. A submitted status only means Canvas received an attempt; it does not prove correctness or a grade.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section install-requirements" id="setup-boundaries">
+        <h2>Private by design, explicit about limits.</h2>
+        <p class="section-intro">Canvas Pilot runs on the machine that runs your agent. Login, course context, source files, drafts, and run state stay local.</p>
+        <div class="split">
+          <div>
+            <h3>You need</h3>
+            <ul class="requirement-list">
+              <li>Codex or a similar local agent with shell and file access.</li>
+              <li>Git and Python 3.11 or newer.</li>
+              <li>A desktop that can open an interactive Chromium window.</li>
+              <li>Your normal Canvas login and 2FA method.</li>
+              <li>Real assignment materials for any workflow you later approve.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Setup does not authorize</h3>
+            <ul class="requirement-list">
+              <li>Reading or executing pending assignments during setup.</li>
+              <li>Uploading or submitting Canvas work.</li>
+              <li>Publishing private course or credential data.</li>
+              <li>Committing, pushing, or deploying from the local clone.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout install-callout">
+          <strong>Keep secrets out of chat.</strong>
+          <span>Enter passwords and 2FA only in the Canvas browser. Treat retained session cookies as sensitive local credentials.</span>
+        </div>
+      </section>
+
+      <section class="section install-faq" id="install-faq">
+        <h2>Before you paste the prompt.</h2>
+        <div class="faq-list">
+          <details>
+            <summary>Can I use a browser-only chatbot?</summary>
+            <p>No. Setup needs a local agent with shell access, file access, Git, Python, and permission to open an interactive browser.</p>
+          </details>
+          <details>
+            <summary>Does setup start doing my assignments?</summary>
+            <p>No. The setup prompt explicitly forbids scanning, planning, executing, uploading, and submitting coursework. The agent must verify setup and stop.</p>
+          </details>
+          <details>
+            <summary>Can it work from an external course website?</summary>
+            <p>It can read an accessible external specification or reference. It does not promise to operate an arbitrary third-party assignment portal.</p>
+          </details>
+          <details>
+            <summary>What happens when a task is unsupported?</summary>
+            <p>The workflow records an error or skip, explains the missing capability or material, and gives you a manual next step. It should never fabricate success.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span>
+          <a href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a> /
+          <a href="https://x.com/X_isdoingreat">X</a> /
+          <a href="mailto:X_isdoingreat@proton.me">Email</a> /
+          <a href="/llms.txt">llms.txt</a>
+        </span>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const button = document.querySelector("#copy-prompt");
+        const prompt = document.querySelector("#setup-prompt-text");
+        const status = document.querySelector("#copy-status");
+
+        const markCopied = () => {
+          button.textContent = "Copied";
+          status.textContent = "Copied. Paste the prompt into your local agent.";
+          window.setTimeout(() => {
+            button.textContent = "Copy setup prompt";
+          }, 2400);
+        };
+
+        button.addEventListener("click", async () => {
+          const text = prompt.value.trim();
+          let copied = false;
+
+          if (window.isSecureContext && navigator.clipboard) {
+            try {
+              await navigator.clipboard.writeText(text);
+              copied = true;
+            } catch (error) {
+              copied = false;
+            }
+          }
+
+          if (!copied) {
+            prompt.focus();
+            prompt.select();
+            prompt.setSelectionRange(0, prompt.value.length);
+            try {
+              copied = document.execCommand("copy");
+            } catch (error) {
+              copied = false;
+            }
+          }
+
+          if (copied) {
+            markCopied();
+          } else {
+            status.textContent = "Copy failed. The prompt is selected so you can copy it manually.";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

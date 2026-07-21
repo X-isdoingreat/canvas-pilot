@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas Pilot local-first privacy model</title>
+    <meta name="description" content="Canvas Pilot keeps Canvas credentials, course overlays, drafts, runs, and assignment inputs local by default.">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/docs/local-first">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Canvas Pilot local-first model">
+    <meta property="og:description" content="Private coursework data stays on the user's machine.">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/docs/local-first">
+    <meta property="og:type" content="article">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/"><span class="brand-mark">CP</span><span>Canvas Pilot</span></a>
+        <div class="nav-links">
+          <a href="/compare/canvas-mcp">Compare</a>
+          <a href="/docs/power-user-guide">Power users</a>
+          <a href="/faq">FAQ</a>
+          <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+    <main class="article">
+      <article class="article-body">
+        <p class="eyebrow">Privacy model</p>
+        <h1>Local-first by default</h1>
+        <p class="lede">
+          Canvas Pilot is designed as a local agent workflow. The public repo
+          ships the generic framework. Real courses, credentials, and draft
+          outputs stay on the user's machine.
+        </p>
+
+        <h2 id="local">What stays local</h2>
+        <ul>
+          <li>Canvas credentials and browser session cookies.</li>
+          <li>School-specific course identifiers and routing files.</li>
+          <li>Private course overlays that describe instructor-specific patterns.</li>
+          <li>Downloaded assignment inputs and source materials.</li>
+          <li>Runs, drafts, result files, and REPORT.md outputs.</li>
+        </ul>
+
+        <h2 id="public">What is public</h2>
+        <p>
+          The public project contains the framework: skills, docs, examples,
+          setup guidance, and generic workflow skeletons. It does not need a
+          user's real school, instructor, course, draft, or credential data.
+        </p>
+
+        <h2 id="why">Why this matters</h2>
+        <p>
+          Coursework automation touches sensitive context. A local-first design
+          lets power users operate the workflow without turning Canvas data into
+          a hosted service dependency.
+        </p>
+      </article>
+      <aside class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#local">What stays local</a>
+        <a href="#public">What is public</a>
+        <a href="#why">Why this matters</a>
+      </aside>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span><a href="/">Home</a> / <a href="/llms.txt">llms.txt</a></span>
+      </div>
+    </footer>
+  </body>
+</html>

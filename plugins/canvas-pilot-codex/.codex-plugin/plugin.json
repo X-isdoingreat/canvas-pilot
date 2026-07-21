@@ -1,0 +1,15 @@
+{
+  "name": "canvas-pilot-codex",
+  "version": "0.1.0",
+  "description": "Manifest-only public-safe Codex sidecar skill declarations for Canvas Pilot.",
+  "skills": [
+    "skills/canvas-bootstrap",
+    "skills/canvas-setup",
+    "skills/canvas-skill-opportunity",
+    "skills/canvas-scan",
+    "skills/canvas-execute",
+    "skills/canvas-skip",
+    "skills/cc-sync-runner",
+    "skills/cc-sync-execute-loop"
+  ]
+}

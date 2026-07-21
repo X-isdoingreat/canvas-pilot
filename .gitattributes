@@ -1,0 +1,22 @@
+# ── Public-snapshot export exclusions ───────────────────────────────
+# scripts/push_public_snapshot.py publishes via `git archive origin/main`,
+# which honors `export-ignore`. The paths below stay tracked in the dev
+# repo (Canvas_pilot) but are NOT included in the public fork
+# (Canvas_pilot_public). Excluded: the iClicker personal side-project,
+# dead one-shot scripts, dated dev logs, and untracked variance-test WIP.
+# (The humanizer skill family was genericized + published 2026-05-24, so
+# it is intentionally NOT excluded here anymore.)
+src/variance_test_*.py export-ignore
+.iclicker export-ignore
+_rename_repo.py export-ignore
+setup.py export-ignore
+5.15.md export-ignore
+5.18.md export-ignore
+.githooks/* text eol=lf
+AGENTS.md export-ignore
+CODEX_HANDOFF.md export-ignore
+docs/CODEX_*.md export-ignore
+docs/GITHUB_DISCOVERABILITY_*.md export-ignore
+docs/v0-essay-skeleton-contract-gap.md export-ignore
+scripts/codex_check.py export-ignore
+scripts/push_public_snapshot.py export-ignore

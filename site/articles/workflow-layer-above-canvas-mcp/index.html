@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas Pilot: the workflow layer above Canvas MCP</title>
+    <meta name="description" content="A long-form explanation of why Canvas Pilot focuses on recurring course workflows, approval boundaries, local privacy, and AI power users.">
+    <link rel="canonical" href="https://canvas-pilot.likelyou.com/articles/workflow-layer-above-canvas-mcp">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Canvas Pilot: the workflow layer above Canvas MCP">
+    <meta property="og:description" content="Canvas access is not the same as reusable coursework workflow memory.">
+    <meta property="og:url" content="https://canvas-pilot.likelyou.com/articles/workflow-layer-above-canvas-mcp">
+    <meta property="og:type" content="article">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/"><span class="brand-mark">CP</span><span>Canvas Pilot</span></a>
+        <div class="nav-links">
+          <a href="/compare/canvas-mcp">Compare</a>
+          <a href="/releases/public-preview-2026-07-04">Release</a>
+          <a href="/docs/power-user-guide">Power users</a>
+          <a class="button-secondary" href="https://github.com/X-isdoingreat/canvas-pilot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+    <main class="article">
+      <article class="article-body">
+        <p class="article-meta">Published July 4, 2026 by X_isdoingreat</p>
+        <h1>Canvas Pilot: the workflow layer above Canvas MCP</h1>
+        <p class="lede">
+          Canvas Pilot is built on a simple product belief: the valuable part of
+          student workflow automation is not only seeing Canvas. It is learning
+          what repeats in each course and turning that pattern into a local,
+          review-first workflow.
+        </p>
+
+        <h2 id="access-is-not-memory">Access is not memory</h2>
+        <p>
+          Canvas MCP servers are useful because they give an agent access to
+          Canvas. The agent can list assignments, read modules, fetch files, and
+          inspect course pages. That solves the access problem.
+        </p>
+        <p>
+          It does not solve the repeated-workflow problem. A course often has a
+          durable shape that does not live in one assignment description. One
+          course may publish the real spec on an external site. Another may
+          always require the same reading annotation format. A third may use the
+          same problem-source and PDF delivery pattern every week.
+        </p>
+        <p>
+          If an agent has to rediscover that structure every time, the user is
+          still paying the coordination cost. Canvas Pilot treats that repeated
+          structure as the product surface.
+        </p>
+
+        <h2 id="workflow-shape">The workflow shape</h2>
+        <p>Canvas Pilot uses a fixed boundary:</p>
+        <pre class="code-block">scan Canvas -> approval plan -> student approval -> approved workflow -> review-ready output -> REPORT.md</pre>
+        <p>
+          The scan step does not begin assignment work. It writes a plan and
+          stops. Execution happens only after the student approves selected
+          items. Approved items then route into course-specific workflows that
+          know how to find the real spec, gather inputs, produce a draft, run
+          checks, and report what happened.
+        </p>
+
+        <h2 id="power-user">Why this is for AI power users first</h2>
+        <p>
+          The public preview is not a no-code consumer product. It is for people
+          who already know how to use local AI agent tools such as Codex or
+          Claude Code and want to stop repeating meaningless Canvas coordination
+          work by hand.
+        </p>
+        <p>
+          If you are comfortable running an agent locally, reviewing a generated
+          plan, and checking draft outputs before submission, Canvas Pilot can
+          make recurring coursework feel like a one-command workflow. If you are
+          not comfortable with that operating model, the product will feel hard.
+          That boundary is intentional.
+        </p>
+
+        <h2 id="local-first">Why local-first matters</h2>
+        <p>
+          Coursework data is sensitive. Credentials, school-specific course
+          identifiers, drafts, cookies, assignment inputs, and private overlays
+          should not become part of a hosted multi-tenant service by default.
+        </p>
+        <p>
+          Canvas Pilot keeps those files on the user's machine. The public repo
+          ships the generic framework. The user's real courses live in local,
+          gitignored configuration and run directories.
+        </p>
+
+        <h2 id="not-homework-service">What Canvas Pilot is not</h2>
+        <p>
+          Canvas Pilot is not a silent homework service. The default mode is
+          draft production and student review, not automatic submission. The
+          framework is designed around approval, reporting, and local operator
+          responsibility.
+        </p>
+        <p>
+          Its strongest long-term use case is repeated, structured coursework
+          where the pattern is stable enough to become a workflow. That is the
+          product category: not "one prompt that writes", but "course patterns
+          that persist."
+        </p>
+
+        <h2 id="public-preview">What the public preview proves</h2>
+        <p>
+          The current public preview proves the shape of the system: scan,
+          approval, execute, per-assignment result files, reusable course
+          skeletons, and local-first privacy boundaries. It is early, but the
+          direction is clear.
+        </p>
+        <p>
+          Canvas Pilot is the workflow layer above Canvas access. Canvas MCP can
+          be part of the input layer. The product value is in what happens after
+          Canvas is visible to the agent.
+        </p>
+      </article>
+      <aside class="toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#access-is-not-memory">Access is not memory</a>
+        <a href="#workflow-shape">Workflow shape</a>
+        <a href="#power-user">Power users</a>
+        <a href="#local-first">Local-first</a>
+        <a href="#not-homework-service">Not a homework service</a>
+        <a href="#public-preview">Public preview</a>
+      </aside>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Canvas Pilot by X_isdoingreat</span>
+        <span><a href="/">Home</a> / <a href="/compare/canvas-mcp">Compare</a></span>
+      </div>
+    </footer>
+  </body>
+</html>
