@@ -463,8 +463,8 @@ def validate_execute_marker(
     marker = dict(marker_data)
     if not _nonempty_text(marker.get("session_id")):
         raise RunStateError("execute marker requires session_id")
-    if marker.get("owner_kind") != "codex":
-        raise RunStateError("execute marker owner_kind must be 'codex'")
+    if marker.get("owner_kind") not in {"codex", "claude"}:
+        raise RunStateError("execute marker owner_kind must be 'codex' or 'claude'")
     _parse_aware_time(marker.get("created_at"), "marker created_at")
     digest = marker.get("plan_digest")
     if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
@@ -844,10 +844,11 @@ def _main(argv: list[str] | None = None) -> int:
                 args.expected_session_id
                 or os.environ.get("CODEX_THREAD_ID")
                 or os.environ.get("CODEX_SESSION_ID")
+                or os.environ.get("CLAUDE_CODE_SESSION_ID")
             )
             if not expected_session_id:
                 raise RunStateError(
-                    "prepare-results requires --expected-session-id or a Codex session environment variable"
+                    "prepare-results requires --expected-session-id or an agent session environment variable"
                 )
             output = prepare_approved_results(
                 args.run_dir, expected_session_id=expected_session_id

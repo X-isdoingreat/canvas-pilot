@@ -70,7 +70,11 @@ def check_execute_marker() -> str | None:
     marker = today / ".scan_in_progress"
     if not marker.exists():
         return None
-    current_session = os.environ.get("CODEX_SESSION_ID") or os.environ.get("CODEX_THREAD_ID")
+    current_session = (
+        os.environ.get("CODEX_SESSION_ID")
+        or os.environ.get("CODEX_THREAD_ID")
+        or os.environ.get("CLAUDE_CODE_SESSION_ID")
+    )
     try:
         marker_text = marker.read_text(encoding="utf-8", errors="strict").strip()
     except (OSError, UnicodeError):

@@ -70,14 +70,20 @@ def _is_exact_loopback(origin: str) -> bool:
 
 def mutation_authorization_enforced(environ: Mapping[str, str] | None = None) -> bool:
     env = os.environ if environ is None else environ
-    return bool(env.get("CODEX_THREAD_ID")) or env.get("CANVAS_ENFORCE_MUTATION_AUTH", "").lower() in {
-        "1", "true", "yes", "on"
-    }
+    return (
+        bool(env.get("CODEX_THREAD_ID"))
+        or bool(env.get("CLAUDE_CODE_SESSION_ID"))
+        or env.get("CANVAS_ENFORCE_MUTATION_AUTH", "").lower() in {"1", "true", "yes", "on"}
+    )
 
 
 def current_authorization_session(environ: Mapping[str, str] | None = None) -> str | None:
     env = os.environ if environ is None else environ
-    return env.get("CODEX_THREAD_ID") or env.get("CODEX_SESSION_ID")
+    return (
+        env.get("CODEX_THREAD_ID")
+        or env.get("CODEX_SESSION_ID")
+        or env.get("CLAUDE_CODE_SESSION_ID")
+    )
 
 
 def _default_key_path() -> Path:

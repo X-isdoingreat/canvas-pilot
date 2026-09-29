@@ -354,6 +354,7 @@ def test_current_codex_session_is_mandatory(
     run_dir, _, _ = _write_run(tmp_path)
     monkeypatch.delenv("CODEX_THREAD_ID", raising=False)
     monkeypatch.delenv("CODEX_SESSION_ID", raising=False)
+    monkeypatch.delenv("CLAUDE_CODE_SESSION_ID", raising=False)
     with pytest.raises(MutationApprovalError, match="thread/session"):
         issue_interactive_authorization(
             run_dir=run_dir,

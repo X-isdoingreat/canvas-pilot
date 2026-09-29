@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 
 from _lib import ROOT, read_event, safe_main, today_dir
@@ -50,6 +51,18 @@ def _routes_nonempty(yaml_path) -> bool:
     return False
 
 
+def _export_claude_env() -> None:
+    """Put the project venv first on PATH for later Claude Bash calls, so the
+    skills' bare `python -m ...` resolves on machines without `python`."""
+    env_file = os.environ.get("CLAUDE_ENV_FILE")
+    venv_bin = ROOT / ".venv" / "bin"
+    if not env_file or not venv_bin.is_dir():
+        return
+    with open(env_file, "a", encoding="utf-8") as f:
+        f.write(f'export PATH="{venv_bin}:$PATH"\n')
+        f.write("export CANVAS_ENFORCE_MUTATION_AUTH=1\n")
+
+
 @safe_main
 def main() -> None:
     read_event()
@@ -58,11 +71,20 @@ def main() -> None:
     plan = today / "plan.json"
     ledger = ROOT / "runs" / "_processed.json"
 
-    parts = [
-        "Codex primary driver active.",
-        "Preserve scan -> approval -> execute boundaries.",
-        "Do not modify .claude/ unless explicitly asked.",
-    ]
+    if os.environ.get("CLAUDECODE") or os.environ.get("CLAUDE_CODE_SESSION_ID"):
+        _export_claude_env()
+        parts = [
+            "Claude Code driver active (skills in .claude/skills are synced from .agents/skills).",
+            "Preserve scan -> approval -> execute boundaries.",
+            "Canvas mutations require a signed receipt from canvas-submit; "
+            "run Python as `.venv/bin/python`.",
+        ]
+    else:
+        parts = [
+            "Codex primary driver active.",
+            "Preserve scan -> approval -> execute boundaries.",
+            "Do not modify .claude/ unless explicitly asked.",
+        ]
 
     # Setup-state detection (ported from .claude/hooks/check-setup-done.py):
     # nudge dispatching canvas-setup when unconfigured; stay quiet once ready so

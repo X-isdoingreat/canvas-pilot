@@ -1,16 +1,14 @@
 {
+  "env": {
+    "CANVAS_ENFORCE_MUTATION_AUTH": "1"
+  },
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "python \".claude/hooks/check-setup-done.py\"",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/inject-context.py\"",
+            "command": "\"${CLAUDE_PROJECT_DIR}/.venv/bin/python\" \"${CLAUDE_PROJECT_DIR}/.codex/hooks/session_start.py\"",
             "timeout": 30
           }
         ]
@@ -22,13 +20,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-public-leak.py\"",
-            "timeout": 30
-          },
-          {
-            "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-presubmit-audit.py\"",
-            "timeout": 30
+            "command": "\"${CLAUDE_PROJECT_DIR}/.venv/bin/python\" \"${CLAUDE_PROJECT_DIR}/.codex/hooks/pre_tool_guard.py\"",
+            "timeout": 90
           }
         ]
       },
@@ -37,7 +30,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-no-runner-script.py\"",
+            "command": "\"${CLAUDE_PROJECT_DIR}/.venv/bin/python\" \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-no-runner-script.py\"",
             "timeout": 10
           }
         ]
@@ -45,26 +38,11 @@
     ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit",
+        "matcher": "Bash|Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-result-schema.py\"",
-            "timeout": 30
-          },
-          {
-            "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-spec-grounding.py\"",
-            "timeout": 30
-          },
-          {
-            "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-identifier-grounding.py\"",
-            "timeout": 30
-          },
-          {
-            "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-source-manifest.py\"",
+            "command": "\"${CLAUDE_PROJECT_DIR}/.venv/bin/python\" \"${CLAUDE_PROJECT_DIR}/.codex/hooks/post_tool_guard.py\"",
             "timeout": 30
           }
         ]
@@ -75,8 +53,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-router-complete.py\"",
-            "timeout": 60
+            "command": "\"${CLAUDE_PROJECT_DIR}/.venv/bin/python\" \"${CLAUDE_PROJECT_DIR}/.codex/hooks/stop_guard.py\"",
+            "timeout": 30
           }
         ]
       }
